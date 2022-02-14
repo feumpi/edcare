@@ -11,8 +11,8 @@
 #define IDOSOS 0
 #define CUIDADORES 1
 
-void *carregarIdosos();
-// Lista *carregarCuidadores();
+void carregarIdosos();
+void carregarCuidadores();
 
 int main() {
     printf("EDCare\n\n");
@@ -20,11 +20,12 @@ int main() {
     EDCare *edcare = inicializarEDCare();
 
     carregarIdosos(listaIdosos(edcare));
+    carregarCuidadores(listaCuidadores(edcare));
 
     return 0;
 }
 
-void *carregarIdosos(Lista *lista) {
+void carregarIdosos(Lista *lista) {
     // Abrir arquivos
     FILE *arq_apoio = fopen("in/apoio.txt", "r");
 
@@ -47,4 +48,29 @@ void *carregarIdosos(Lista *lista) {
     }
 
     fclose(arq_apoio);
+}
+
+void carregarCuidadores(Lista *lista) {
+    // Abrir arquivos
+    FILE *arq_cuidadores = fopen("in/cuidadores.txt", "r");
+
+    char linha[100];
+
+    int contador = 0;
+    while (fgets(linha, 100, arq_cuidadores)) {
+        // se for a primeira linha
+        if (contador == 0) {
+            // Enquanto encontrar nomes, cria cuidadores e adiciona na lista
+            char *nomeAtual = strtok(linha, ";");
+            while (nomeAtual != NULL) {
+                Cuidador *cuidador = inicializarCuidador(nomeAtual);
+                inserirFim(lista, cuidador);
+                nomeAtual = strtok(NULL, ";");
+            }
+        }
+
+        contador++;
+    }
+
+    fclose(arq_cuidadores);
 }

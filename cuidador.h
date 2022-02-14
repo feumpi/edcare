@@ -9,7 +9,7 @@
 
 typedef struct cuidador Cuidador;
 
-Cuidador* inicializarCuidador();
+Cuidador* inicializarCuidador(char* nome);
 
 char* nomeCuidador(Cuidador* cuidador);
 
