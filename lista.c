@@ -4,9 +4,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "cuidador.h"
+#include "idoso.h"
+
 struct lista {
     Celula *prim;
     Celula *ult;
+    int tipo;
 };
 
 struct celula {
@@ -14,8 +18,9 @@ struct celula {
     Celula *prox;
 };
 
-Lista *inicializarLista() {
+Lista *inicializarLista(int tipo) {
     Lista *lista = malloc(sizeof(Lista));
+    lista->tipo = tipo;
     lista->prim = NULL;
     lista->ult = NULL;
     return lista;
@@ -24,7 +29,14 @@ Lista *inicializarLista() {
 void imprimirLista(Lista *lista) {
     printf("----------\n");
     for (Celula *celula = lista->prim; celula != NULL; celula = celula->prox) {
-        // printf("%s", celula->cont);
+        if (lista->tipo == LISTA_IDOSOS) {
+            imprimirIdoso(celula->cont);
+        }
+
+        if (lista->tipo == LISTA_CUIDADORES) {
+            imprimirCuidador(celula->cont);
+        }
+
         printf("\n");
     }
     printf("----------\n\n");

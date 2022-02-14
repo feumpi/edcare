@@ -22,6 +22,9 @@ int main() {
     carregarIdosos(listaIdosos(edcare));
     carregarCuidadores(listaCuidadores(edcare));
 
+    imprimirLista(listaIdosos(edcare));
+    imprimirLista(listaCuidadores(edcare));
+
     return 0;
 }
 
@@ -43,6 +46,8 @@ void carregarIdosos(Lista *lista) {
                 nomeAtual = strtok(NULL, ";");
             }
         }
+
+        // próximas linhas: carregar amigos
 
         contador++;
     }

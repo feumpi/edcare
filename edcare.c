@@ -8,8 +8,8 @@ struct edcare {
 EDCare *inicializarEDCare() {
     EDCare *edcare = malloc(sizeof(EDCare));
 
-    edcare->idosos = inicializarLista();
-    edcare->cuidadores = inicializarLista();
+    edcare->idosos = inicializarLista(LISTA_IDOSOS);
+    edcare->cuidadores = inicializarLista(LISTA_CUIDADORES);
 
     return edcare;
 }

@@ -6,10 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define LISTA_IDOSOS 0
+#define LISTA_CUIDADORES 1
+#define LISTA_LEITURAS 2
+
 typedef struct lista Lista;
 typedef struct celula Celula;
 
-Lista *inicializarLista();
+Lista *inicializarLista(int tipo);
 
 void inserirFim(Lista *lista, void *cont);
 

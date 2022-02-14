@@ -10,7 +10,7 @@ inicializarCuidador(char *nome) {
     Cuidador *cuidador = malloc(sizeof(Cuidador));
 
     cuidador->nome = strdup(nome);
-    cuidador->leituras = inicializarLista();
+    cuidador->leituras = inicializarLista(LISTA_LEITURAS);
 
     return cuidador;
 }
@@ -21,6 +21,10 @@ char *nomeCuidador(Cuidador *cuidador) {
 
 Lista *leiturasCuidador(Cuidador *cuidador) {
     return cuidador->leituras;
+}
+
+void imprimirCuidador(Cuidador *cuidador) {
+    printf("Cuidador: %s\n", cuidador->nome);
 }
 
 void destruirCuidador(Cuidador *cuidador) {

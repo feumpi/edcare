@@ -12,9 +12,9 @@ inicializarIdoso(char *nome) {
     Idoso *idoso = malloc(sizeof(Idoso));
 
     idoso->nome = strdup(nome);
-    idoso->amigos = inicializarLista();
-    idoso->cuidadores = inicializarLista();
-    idoso->leituras = inicializarLista();
+    idoso->amigos = inicializarLista(LISTA_IDOSOS);
+    idoso->cuidadores = inicializarLista(LISTA_CUIDADORES);
+    idoso->leituras = inicializarLista(LISTA_LEITURAS);
 
     return idoso;
 }
@@ -33,6 +33,10 @@ Lista *meusCuidadores(Idoso *idoso) {
 
 Lista *leiturasIdoso(Idoso *idoso) {
     return idoso->leituras;
+}
+
+void imprimirIdoso(Idoso *idoso) {
+    printf("Idoso: %s\n", idoso->nome);
 }
 
 void destruirIdoso(Idoso *idoso) {

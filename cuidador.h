@@ -15,6 +15,8 @@ char* nomeCuidador(Cuidador* cuidador);
 
 Lista* leiturasCuidador(Cuidador* cuidador);
 
+void imprimirCuidador(Cuidador* cuidador);
+
 void destruirCuidador(Cuidador* cuidador);
 
 #endif

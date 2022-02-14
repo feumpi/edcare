@@ -19,6 +19,8 @@ Lista* meusCuidadores(Idoso* idoso);
 
 Lista* leiturasIdoso(Idoso* idoso);
 
+void imprimirIdoso(Idoso* idoso);
+
 void destruirIdoso(Idoso* idoso);
 
 #endif
