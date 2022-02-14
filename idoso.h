@@ -9,8 +9,16 @@
 
 typedef struct idoso Idoso;
 
-Idoso *inicializarIdoso();
+Idoso* inicializarIdoso(char* nome);
 
-void destruirIdoso(Idoso *idoso);
+char* nomeIdoso(Idoso* idoso);
+
+Lista* meusAmigos(Idoso* idoso);
+
+Lista* meusCuidadores(Idoso* idoso);
+
+Lista* leiturasIdoso(Idoso* idoso);
+
+void destruirIdoso(Idoso* idoso);
 
 #endif

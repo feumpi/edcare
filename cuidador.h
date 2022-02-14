@@ -9,8 +9,12 @@
 
 typedef struct cuidador Cuidador;
 
-Cuidador *inicializarCuidador();
+Cuidador* inicializarCuidador();
 
-void destruirCuidador(Cuidador *cuidador);
+char* nomeCuidador(Cuidador* cuidador);
+
+Lista* leiturasCuidador(Cuidador* cuidador);
+
+void destruirCuidador(Cuidador* cuidador);
 
 #endif

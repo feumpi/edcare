@@ -7,8 +7,12 @@
 
 typedef struct edcare EDCare;
 
-EDCare *inicializarEDCare();
+EDCare* inicializarEDCare();
 
-void destruirEDCare(EDCare *edcare);
+Lista* listaIdosos(EDCare* edcare);
+
+Lista* listaCuidadores(EDCare* edcare);
+
+void destruirEDCare(EDCare* edcare);
 
 #endif

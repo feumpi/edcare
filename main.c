@@ -2,26 +2,29 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "cuidador.h"
 #include "edcare.h"
+#include "idoso.h"
+#include "leitura.h"
 #include "lista.h"
 
 #define IDOSOS 0
 #define CUIDADORES 1
 
-Lista *carregarIdosos();
-Lista *carregarCuidadores();
+void *carregarIdosos();
+// Lista *carregarCuidadores();
 
 int main() {
     printf("EDCare\n\n");
 
     EDCare *edcare = inicializarEDCare();
 
+    carregarIdosos(listaIdosos(edcare));
+
     return 0;
 }
 
-Lista *carregarIdosos() {
-    Lista *idosos = inicializarLista();
-
+void *carregarIdosos(Lista *lista) {
     // Abrir arquivos
     FILE *arq_apoio = fopen("in/apoio.txt", "r");
 
@@ -31,10 +34,11 @@ Lista *carregarIdosos() {
     while (fgets(linha, 100, arq_apoio)) {
         // se for a primeira linha
         if (contador == 0) {
-            // Enquanto encontrar nomes, adiciona na lista idosos
+            // Enquanto encontrar nomes, cria idosos e adiciona na lista
             char *nomeAtual = strtok(linha, ";");
             while (nomeAtual != NULL) {
-                inserirFim(idosos, nomeAtual);
+                Idoso *idoso = inicializarIdoso(nomeAtual);
+                inserirFim(lista, idoso);
                 nomeAtual = strtok(NULL, ";");
             }
         }
@@ -43,6 +47,4 @@ Lista *carregarIdosos() {
     }
 
     fclose(arq_apoio);
-
-    return idosos;
 }

@@ -19,6 +19,22 @@ inicializarIdoso(char *nome) {
     return idoso;
 }
 
+char *nomeIdoso(Idoso *idoso) {
+    return idoso->nome;
+}
+
+Lista *meusAmigos(Idoso *idoso) {
+    return idoso->amigos;
+}
+
+Lista *meusCuidadores(Idoso *idoso) {
+    return idoso->cuidadores;
+}
+
+Lista *leiturasIdoso(Idoso *idoso) {
+    return idoso->leituras;
+}
+
 void destruirIdoso(Idoso *idoso) {
     destruirLista(idoso->amigos);
     destruirLista(idoso->cuidadores);

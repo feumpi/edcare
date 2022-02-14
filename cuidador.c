@@ -15,6 +15,14 @@ inicializarCuidador(char *nome) {
     return cuidador;
 }
 
+char *nomeCuidador(Cuidador *cuidador) {
+    return cuidador->nome;
+}
+
+Lista *leiturasCuidador(Cuidador *cuidador) {
+    return cuidador->leituras;
+}
+
 void destruirCuidador(Cuidador *cuidador) {
     destruirLista(cuidador->leituras);
     free(cuidador);

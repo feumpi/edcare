@@ -24,7 +24,7 @@ Lista *inicializarLista() {
 void imprimirLista(Lista *lista) {
     printf("----------\n");
     for (Celula *celula = lista->prim; celula != NULL; celula = celula->prox) {
-        printf("%s", celula->cont);
+        // printf("%s", celula->cont);
         printf("\n");
     }
     printf("----------\n\n");
