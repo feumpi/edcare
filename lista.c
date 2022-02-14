@@ -1,60 +1,53 @@
-//  listaMat.c: implementação do TAD Lista de chares. Nesta implementação, não serão criadas e nem liberadas nomees. Isso será função do cliente testador. Apenas manipulem células da lista, como explicado nos vídeos.
 
 #include "lista.h"
-#include <stdlib.h>
 
-struct lista
-{
+#include <stdlib.h>
+#include <string.h>
+
+struct lista {
     Celula *prim;
     Celula *ult;
 };
 
-struct celula
-{
-    char *cont;
+struct celula {
+    void *cont;
     Celula *prox;
 };
 
-Lista *inicializarLista()
-{
+Lista *inicializarLista() {
     Lista *lista = malloc(sizeof(Lista));
     lista->prim = NULL;
     lista->ult = NULL;
     return lista;
 }
 
-void imprimirLista(Lista *lista)
-{
+void imprimirLista(Lista *lista) {
     printf("----------\n");
-    for (Celula *celula = lista->prim; celula != NULL; celula = celula->prox)
-    {
+    for (Celula *celula = lista->prim; celula != NULL; celula = celula->prox) {
         printf("%s", celula->cont);
         printf("\n");
     }
     printf("----------\n\n");
 }
 
-void inserirInicio(Lista *lista, char *nome)
-{
+void inserirInicio(Lista *lista, void *cont) {
     Celula *celula = malloc(sizeof(Celula));
-    celula->cont = nome;
+    celula->cont = cont;
 
     celula->prox = lista->prim;
     lista->prim = celula;
 
-    //!lista->ult equivalente a lista->ult == NULL
+    //! lista->ult equivalente a lista->ult == NULL
     if (!lista->ult)
         lista->ult = celula;
 }
 
-void inserirFim(Lista *lista, char *nome)
-{
+void inserirFim(Lista *lista, void *cont) {
     Celula *celula = malloc(sizeof(Celula));
-    celula->cont = nome;
+    celula->cont = cont;
     celula->prox = NULL;
 
-    if (lista->ult)
-    {
+    if (lista->ult) {
         lista->ult->prox = celula;
     }
 
@@ -64,17 +57,15 @@ void inserirFim(Lista *lista, char *nome)
         lista->prim = celula;
 }
 
-char *removerNaPosicao(Lista *lista, int pos)
-{
-    char *nome;
+void *removerNaPosicao(Lista *lista, int pos) {
+    void *cont;
 
     Celula *atual = lista->prim;
     Celula *anterior = NULL;
 
     int posAtual = 0;
 
-    while (atual && posAtual != pos)
-    {
+    while (atual && posAtual != pos) {
         anterior = atual;
         atual = atual->prox;
         posAtual++;
@@ -83,49 +74,42 @@ char *removerNaPosicao(Lista *lista, int pos)
     if (!atual)
         return NULL;
 
-    nome = atual->cont;
+    cont = atual->cont;
 
-    //Igual ao primeiro e último (único elemento)
-    if (atual == lista->prim && atual == lista->ult)
-    {
+    // Igual ao primeiro e último (único elemento)
+    if (atual == lista->prim && atual == lista->ult) {
         lista->prim = NULL;
         lista->ult = NULL;
     }
-    //Igual a somente o primeiro
-    else if (atual == lista->prim)
-    {
+    // Igual a somente o primeiro
+    else if (atual == lista->prim) {
         lista->prim = atual->prox;
     }
-    //Igual a somente o último
-    else if (atual == lista->ult)
-    {
+    // Igual a somente o último
+    else if (atual == lista->ult) {
         lista->ult = anterior;
         anterior->prox = NULL;
     }
-    //Nem o último, nem o primeiro
-    else
-    {
+    // Nem o último, nem o primeiro
+    else {
         anterior->prox = atual->prox;
     }
 
     free(atual);
-    return nome;
+    return cont;
 }
 
-void destruirLista(Lista *lista)
-{
-
+void destruirLista(Lista *lista) {
     Celula *atual = lista->prim;
     Celula *prox = atual->prox;
 
-    //Liberar todas as células
-    while (atual)
-    {
+    // Liberar todas as células
+    while (atual) {
         prox = atual->prox;
         free(atual);
         atual = prox;
     }
 
-    //Liberar a lista
+    // Liberar a lista
     free(lista);
 }
