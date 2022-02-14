@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "edcare.h"
 #include "lista.h"
 
 #define IDOSOS 0
@@ -9,23 +11,15 @@
 Lista *carregarIdosos();
 Lista *carregarCuidadores();
 
-int main()
-{
-
+int main() {
     printf("EDCare\n\n");
 
-    Lista *idosos = carregarIdosos();
-    // Lista *cuidadores = inicializarLista();
-
-    printf("Idosos carregados:\n");
-    imprimirLista(idosos);
+    EDCare *edcare = inicializarEDCare();
 
     return 0;
 }
 
-Lista *carregarIdosos()
-{
-
+Lista *carregarIdosos() {
     Lista *idosos = inicializarLista();
 
     // Abrir arquivos
@@ -34,15 +28,12 @@ Lista *carregarIdosos()
     char linha[100];
 
     int contador = 0;
-    while (fgets(linha, 100, arq_apoio))
-    {
+    while (fgets(linha, 100, arq_apoio)) {
         // se for a primeira linha
-        if (contador == 0)
-        {
+        if (contador == 0) {
             // Enquanto encontrar nomes, adiciona na lista idosos
             char *nomeAtual = strtok(linha, ";");
-            while (nomeAtual != NULL)
-            {
+            while (nomeAtual != NULL) {
                 inserirFim(idosos, nomeAtual);
                 nomeAtual = strtok(NULL, ";");
             }
@@ -54,12 +45,4 @@ Lista *carregarIdosos()
     fclose(arq_apoio);
 
     return idosos;
-}
-
-Lista *carregarCuidadores()
-{
-
-    Lista *cuidadores = inicializarLista();
-
-    FILE *arq_cuidadores = fopen("in/cuidadores.txt", "r");
 }
