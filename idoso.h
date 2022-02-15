@@ -17,7 +17,7 @@ Lista* meusAmigos(Idoso* idoso);
 
 Lista* meusCuidadores(Idoso* idoso);
 
-Lista* leiturasIdoso(Idoso* idoso);
+FILE* leiturasIdoso(Idoso* idoso);
 
 void imprimirIdoso(Idoso* idoso);
 

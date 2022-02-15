@@ -14,7 +14,7 @@
 void carregarIdosos(Lista *lista);
 void carregarCuidadores(Lista *cuidadores, Lista *idosos);
 
-// FIXME: carregar as listas de amigos e de cuidadores para dentro das listas dos idosos (SEGFAULT)
+// TODO: Ler leituras de cada pessoa
 
 int main() {
     printf("EDCare\n\n");
@@ -27,7 +27,7 @@ int main() {
     // imprimirLista(listaIdosos(edcare));
     // imprimirLista(listaCuidadores(edcare));
 
-    Idoso *idoso = encontrarNome(listaIdosos(edcare), "Luis");
+    /* Idoso *idoso = encontrarNome(listaIdosos(edcare), "Luis");
 
     if (idoso) {
         printf("Amigos de %s:\n", nomeIdoso(idoso));
@@ -38,7 +38,7 @@ int main() {
         printf("Cuidadores de %s:\n", nomeIdoso(idoso));
         imprimirLista(meusCuidadores(idoso));
     }
-
+ */
     return 0;
 }
 

@@ -13,7 +13,7 @@ Cuidador* inicializarCuidador(char* nome);
 
 char* nomeCuidador(Cuidador* cuidador);
 
-Lista* leiturasCuidador(Cuidador* cuidador);
+FILE* leiturasCuidador(Cuidador* cuidador);
 
 void imprimirCuidador(Cuidador* cuidador);
 

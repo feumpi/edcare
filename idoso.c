@@ -4,7 +4,7 @@ struct idoso {
     char *nome;
     Lista *amigos;
     Lista *cuidadores;
-    Lista *leituras;
+    FILE *leituras;
 };
 
 Idoso *
@@ -14,7 +14,10 @@ inicializarIdoso(char *nome) {
     idoso->nome = strdup(nome);
     idoso->amigos = inicializarLista(LISTA_IDOSOS);
     idoso->cuidadores = inicializarLista(LISTA_CUIDADORES);
-    idoso->leituras = inicializarLista(LISTA_LEITURAS);
+
+    char caminho[50];
+    sprintf(caminho, "in/%s.txt", idoso->nome);
+    idoso->leituras = fopen(caminho, "r");
 
     return idoso;
 }
@@ -31,7 +34,7 @@ Lista *meusCuidadores(Idoso *idoso) {
     return idoso->cuidadores;
 }
 
-Lista *leiturasIdoso(Idoso *idoso) {
+FILE *leiturasIdoso(Idoso *idoso) {
     return idoso->leituras;
 }
 
@@ -42,6 +45,6 @@ void imprimirIdoso(Idoso *idoso) {
 void destruirIdoso(Idoso *idoso) {
     destruirLista(idoso->amigos);
     destruirLista(idoso->cuidadores);
-    destruirLista(idoso->leituras);
+    fclose(idoso->leituras);
     free(idoso);
 }
