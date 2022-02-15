@@ -24,15 +24,20 @@ int main() {
     carregarIdosos(listaIdosos(edcare));
     carregarCuidadores(listaCuidadores(edcare), listaIdosos(edcare));
 
-    imprimirLista(listaIdosos(edcare));
-    imprimirLista(listaCuidadores(edcare));
+    // imprimirLista(listaIdosos(edcare));
+    // imprimirLista(listaCuidadores(edcare));
 
-    /* Idoso *idoso = encontrarNome(listaIdosos(edcare), "Joao");
+    Idoso *idoso = encontrarNome(listaIdosos(edcare), "Luis");
 
     if (idoso) {
         printf("Amigos de %s:\n", nomeIdoso(idoso));
         imprimirLista(meusAmigos(idoso));
-    } */
+    }
+
+    if (idoso) {
+        printf("Cuidadores de %s:\n", nomeIdoso(idoso));
+        imprimirLista(meusCuidadores(idoso));
+    }
 
     return 0;
 }
@@ -48,23 +53,23 @@ void carregarIdosos(Lista *lista) {
         // se for a primeira linha
         if (contador == 0) {
             // Enquanto encontrar nomes, cria idosos e adiciona na lista
-            char *nomeAtual = strtok(linha, ";\n");
+            char *nomeAtual = strtok(linha, " ;\n");
             while (nomeAtual != NULL) {
                 Idoso *idoso = inicializarIdoso(nomeAtual);
                 inserirFim(lista, idoso);
-                nomeAtual = strtok(NULL, ";\n");
+                nomeAtual = strtok(NULL, " ;\n");
             }
         }
         // próximas linhas: carregar amigos
         else {
             // primeiro nome (idoso a ser encontrado)
-            char *nomeAtual = strtok(linha, ";\n");
-            printf("nomeAtual: '%s'\n", nomeAtual);
+            char *nomeAtual = strtok(linha, " ;\n");
+            // printf("nomeAtual: '%s'\n", nomeAtual);
 
             Idoso *idosoAtual = encontrarNome(lista, nomeAtual);
-            printf("idosoAtual: '%s'\n\n", nomeIdoso(idosoAtual));
+            // printf("idosoAtual: '%s'\n\n", nomeIdoso(idosoAtual));
 
-            nomeAtual = strtok(NULL, ";\n");
+            nomeAtual = strtok(NULL, " ;\n");
 
             // se encontrado, enquanto houverem amigos na linha
             while (nomeAtual != NULL) {
@@ -81,7 +86,7 @@ void carregarIdosos(Lista *lista) {
                     inserirFim(meusAmigos(amigo), idosoAtual);
                 }
 
-                nomeAtual = strtok(NULL, ";\n");
+                nomeAtual = strtok(NULL, " ;\n");
             }
         }
 
@@ -102,31 +107,42 @@ void carregarCuidadores(Lista *cuidadores, Lista *idosos) {
         // se for a primeira linha
         if (contador == 0) {
             // Enquanto encontrar nomes, cria cuidadores e adiciona na lista
-            char *nomeAtual = strtok(linha, ";\n");
+            char *nomeAtual = strtok(linha, " ;\n");
             while (nomeAtual != NULL) {
                 Cuidador *cuidador = inicializarCuidador(nomeAtual);
-
+                // printf("cuidador criado: '%s'\n", nomeCuidador(cuidador));
                 if (cuidador)
                     inserirFim(cuidadores, cuidador);
 
-                nomeAtual = strtok(NULL, ";\n");
+                nomeAtual = strtok(NULL, " ;\n");
             }
         }
         // próximas linhas: adicionar cuidadores aos idosos
-        /* else {
+        else {
             // primeiro nome (idoso a ser encontrado)
-            char *nomeAtual = strtok(linha, ";");
+            char *nomeAtual = strtok(linha, " ;\n");
+            // printf("nomeAtual: '%s'\n", nomeAtual);
+
             Idoso *idosoAtual = encontrarNome(idosos, nomeAtual);
+            // printf("idosoAtual: '%s'\n\n", nomeAtual);
+
+            nomeAtual = strtok(NULL, " ;\n");
+            // printf("nomeAtual: '%s'\n", nomeAtual);
 
             // se encontrado, enquanto houverem cuidadores na linha
             while (nomeAtual != NULL) {
                 // insere o idoso na lista de amigos, se encontrado
                 Cuidador *cuidador = encontrarNome(cuidadores, nomeAtual);
-                inserirFim(meusCuidadores(idosoAtual), cuidador);
+                // printf("cuidador: '%s'\n\n", nomeCuidador(cuidador));
 
-                nomeAtual = strtok(NULL, ";");
+                if (cuidador) {
+                    inserirFim(meusCuidadores(idosoAtual), cuidador);
+                }
+
+                nomeAtual = strtok(NULL, " ;\n");
+                // printf("nomeAtual: '%s'\n", nomeAtual);
             }
-        } */
+        }
         contador++;
     }
 
