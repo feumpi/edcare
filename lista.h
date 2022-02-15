@@ -23,6 +23,9 @@ void imprimirLista(Lista *lista);
 
 void *removerNaPosicao(Lista *lista, int pos);
 
+// Enontra e retorna um elemento da lista com o nome correspondente, ou NULL
+void *encontrarNome(Lista *lista, char *nome);
+
 void destruirLista(Lista *lista);
 
 #endif

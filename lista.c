@@ -36,8 +36,6 @@ void imprimirLista(Lista *lista) {
         if (lista->tipo == LISTA_CUIDADORES) {
             imprimirCuidador(celula->cont);
         }
-
-        printf("\n");
     }
     printf("----------\n\n");
 }
@@ -109,6 +107,33 @@ void *removerNaPosicao(Lista *lista, int pos) {
 
     free(atual);
     return cont;
+}
+
+void *encontrarNome(Lista *lista, char *nome) {
+    Celula *atual = lista->prim;
+    Celula *anterior = NULL;
+
+    int posAtual = 0;
+    char *nomeAtual = NULL;
+
+    // iterar a lista
+    while (atual) {
+        if (lista->tipo == LISTA_IDOSOS)
+            nomeAtual = nomeIdoso(atual->cont);
+
+        if (lista->tipo == LISTA_CUIDADORES)
+            nomeAtual = nomeCuidador(atual->cont);
+
+        if (nomeAtual && strcmp(nomeAtual, nome) == 0) {
+            return atual->cont;
+        }
+
+        anterior = atual;
+        atual = atual->prox;
+        posAtual++;
+    }
+
+    return NULL;
 }
 
 void destruirLista(Lista *lista) {
