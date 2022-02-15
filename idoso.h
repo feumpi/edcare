@@ -9,18 +9,25 @@
 
 typedef struct idoso Idoso;
 
+// Inicializa um idoso com o nome correspondente, cria as listas necessárias e abre o arquivo de leituras
 Idoso* inicializarIdoso(char* nome);
 
+// Retorna o nome do idoso
 char* nomeIdoso(Idoso* idoso);
 
+// Retorna a lista de amigos (rede de apoio) do idoso
 Lista* meusAmigos(Idoso* idoso);
 
+// Retorna a lista de cuidadores do idoso
 Lista* meusCuidadores(Idoso* idoso);
 
+// Retorna o arquivo de leituras do idoso
 FILE* leiturasIdoso(Idoso* idoso);
 
+// Imprime o nome do idoso
 void imprimirIdoso(Idoso* idoso);
 
+// Libera a memória alocada para o idoso, fecha o arquivo de leituras e destrói as próprias listas
 void destruirIdoso(Idoso* idoso);
 
 #endif
