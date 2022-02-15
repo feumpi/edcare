@@ -3,12 +3,20 @@
 
 #include <stdlib.h>
 
+#include "cuidador.h"
+#include "idoso.h"
 #include "lista.h"
 
 typedef struct edcare EDCare;
 
 // Inicializa uma instância do EDCare e cria as listas necessárias
 EDCare* inicializarEDCare();
+
+// Carrega o arquivo, inicializa todos os idosos e os adiciona nas listas
+void carregarIdosos(EDCare* edcare);
+
+// Carrega o arquivo, inicializa todos os cuidadores e os adiciona nas listas
+void carregarCuidadores(EDCare* edcare);
 
 // Retorna a lista de todos os idosos do sistema
 Lista* listaIdosos(EDCare* edcare);

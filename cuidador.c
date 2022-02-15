@@ -2,7 +2,7 @@
 
 struct cuidador {
     char *nome;
-    Lista *leituras;
+    FILE *leituras;
 };
 
 Cuidador *
@@ -12,7 +12,7 @@ inicializarCuidador(char *nome) {
     cuidador->nome = strdup(nome);
 
     char caminho[50];
-    sprintf(caminho, "in/%s.txt", idoso->nome);
+    sprintf(caminho, "in/%s.txt", cuidador->nome);
     cuidador->leituras = fopen(caminho, "r");
 
     return cuidador;
