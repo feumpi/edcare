@@ -5,6 +5,7 @@ struct idoso {
     Lista *amigos;
     Lista *cuidadores;
     FILE *leituras;
+    FILE *saida;
 };
 
 Idoso *
@@ -15,9 +16,12 @@ inicializarIdoso(char *nome) {
     idoso->amigos = inicializarLista(LISTA_IDOSOS);
     idoso->cuidadores = inicializarLista(LISTA_CUIDADORES);
 
-    char caminho[50];
-    sprintf(caminho, "in/%s.txt", idoso->nome);
-    idoso->leituras = fopen(caminho, "r");
+    char caminhoEntrada[50], caminhoSaida[50];
+    sprintf(caminhoEntrada, "in/%s-saida.txt", idoso->nome);
+    sprintf(caminhoSaida, "out/%s-saida.txt", idoso->nome);
+
+    idoso->leituras = fopen(caminhoEntrada, "r");
+    idoso->saida = fopen(caminhoSaida, "w");
 
     return idoso;
 }
