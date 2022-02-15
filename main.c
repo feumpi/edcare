@@ -11,7 +11,6 @@
 #define IDOSOS 0
 #define CUIDADORES 1
 
-// TODO: Implementar loop para realizar tratar cada idoso em proximaLeitura()
 // TODO: Implementar loop para repetir proximaLeitura() enquanto houverem novas
 // TODO: Implementar a parte de encontrar o cuidador/amigo mais próximp
 

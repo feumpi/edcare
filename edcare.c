@@ -4,6 +4,8 @@ struct edcare {
     Lista *idosos;
     Lista *cuidadores;
     int leituraAtual;
+    int quantidadeIdosos;
+    int quantidadeCuidadoes;
 };
 
 EDCare *inicializarEDCare() {
@@ -13,6 +15,8 @@ EDCare *inicializarEDCare() {
     edcare->cuidadores = inicializarLista(LISTA_CUIDADORES);
 
     edcare->leituraAtual = -1;
+    edcare->quantidadeIdosos = 0;
+    edcare->quantidadeCuidadoes = 0;
 
     return edcare;
 }
@@ -32,6 +36,7 @@ void carregarIdosos(EDCare *edcare) {
             while (nomeAtual != NULL) {
                 Idoso *idoso = inicializarIdoso(nomeAtual);
                 inserirFim(edcare->idosos, idoso);
+                edcare->quantidadeIdosos++;
                 nomeAtual = strtok(NULL, " ;\n");
             }
         }
@@ -86,8 +91,10 @@ void carregarCuidadores(EDCare *edcare) {
             while (nomeAtual != NULL) {
                 Cuidador *cuidador = inicializarCuidador(nomeAtual);
                 // printf("cuidador criado: '%s'\n", nomeCuidador(cuidador));
-                if (cuidador)
+                if (cuidador) {
                     inserirFim(edcare->cuidadores, cuidador);
+                    edcare->quantidadeCuidadoes++;
+                }
 
                 nomeAtual = strtok(NULL, " ;\n");
             }
@@ -127,56 +134,60 @@ void carregarCuidadores(EDCare *edcare) {
 void proximaLeitura(EDCare *edcare) {
     edcare->leituraAtual++;
 
-    Idoso *idoso = listaN(edcare->idosos, 0);
-    FILE *arq = leiturasIdoso(idoso);
+    // Para cada idoso da lista
+    for (int i = 0; i < edcare->quantidadeIdosos; i++) {
+        Idoso *idoso = listaN(edcare->idosos, i);
+        FILE *arq = leiturasIdoso(idoso);
 
-    if (!idoso) {
-        printf("idoso nao encontrado\n");
-        return;
-    }
-
-    if (!arq) {
-        printf("arquivo não encontrado\n");
-        return;
-    }
-
-    printf("idoso: %s\n", nomeIdoso(idoso));
-
-    char linha[100];
-    float temperatura;
-    int latitude, longitude, queda;
-
-    fgets(linha, 100, leiturasIdoso(idoso));
-
-    sscanf(linha, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda);
-
-    // se queda, acionar cuidador
-    if (queda) {
-        // encontrar cuidador mais próximo
-    }
-    // se febre alta, resetar febreBaixa e acionar cuidador
-    else if (temperatura > 38) {
-        resetarFebreBaixa(idoso);
-
-        // encontrar cuidador mais próximo
-        fprintf(saidaIdoso(idoso), "queda, acionou %s\n", "CuidadorX");
-
-    }
-    // febre baixa, acionar amigo ou cuidador se for recorrente
-    else if (temperatura > 37) {
-        incrementarFebreBaixa(idoso);
-
-        if (febreBaixa(idoso) >= 4) {
-            // encontrar cuidador mais próximo
-            fprintf(saidaIdoso(idoso), "febre baixa pela quarta vez, acionou %s\n", "CuidadorX");
-        }
-        // encontrar amigo mais próximo
-        else {
-            fprintf(saidaIdoso(idoso), "febre baixa, acionou amigo %s\n", "XXX");
+        if (!idoso) {
+            printf("idoso nao encontrado\n");
+            return;
         }
 
-    } else {
-        fprintf(saidaIdoso(idoso), "tudo ok\n");
+        if (!arq) {
+            printf("arquivo não encontrado\n");
+            return;
+        }
+
+        printf("idoso: %s\n", nomeIdoso(idoso));
+
+        char linha[100];
+        float temperatura;
+        int latitude, longitude, queda;
+
+        fgets(linha, 100, leiturasIdoso(idoso));
+
+        // Se os 4 dados foram lidos corretamente
+        if (sscanf(linha, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda) == 4) {
+            // se queda, acionar cuidador
+            if (queda) {
+                // encontrar cuidador mais próximo
+            }
+            // se febre alta, resetar febreBaixa e acionar cuidador
+            else if (temperatura > 38) {
+                resetarFebreBaixa(idoso);
+
+                // encontrar cuidador mais próximo
+                fprintf(saidaIdoso(idoso), "queda, acionou %s\n", "CuidadorX");
+
+            }
+            // febre baixa, acionar amigo ou cuidador se for recorrente
+            else if (temperatura > 37) {
+                incrementarFebreBaixa(idoso);
+
+                if (febreBaixa(idoso) >= 4) {
+                    // encontrar cuidador mais próximo
+                    fprintf(saidaIdoso(idoso), "febre baixa pela quarta vez, acionou %s\n", "CuidadorX");
+                }
+                // encontrar amigo mais próximo
+                else {
+                    fprintf(saidaIdoso(idoso), "febre baixa, acionou amigo %s\n", "XXX");
+                }
+
+            } else {
+                fprintf(saidaIdoso(idoso), "tudo ok\n");
+            }
+        }
     }
 }
 
