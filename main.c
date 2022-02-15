@@ -11,7 +11,9 @@
 #define IDOSOS 0
 #define CUIDADORES 1
 
-// FIXME: implementação do proximaLeitura(): recuperar o primeiro Idoso* da lista, está vindo como 0x0 (NULL) - função listaN()
+// TODO: Implementar loop para realizar tratar cada idoso em proximaLeitura()
+// TODO: Implementar loop para repetir proximaLeitura() enquanto houverem novas
+// TODO: Implementar a parte de encontrar o cuidador/amigo mais próximp
 
 int main() {
     printf("EDCare\n\n");

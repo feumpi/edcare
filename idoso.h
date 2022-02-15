@@ -24,6 +24,18 @@ Lista* meusCuidadores(Idoso* idoso);
 // Retorna o arquivo de leituras do idoso
 FILE* leiturasIdoso(Idoso* idoso);
 
+// Retorna o arquivo de saída do idoso
+FILE* saidaIdoso(Idoso* idoso);
+
+// Retorna a quantidade de vezes que o idoso teve febre baixa
+int febreBaixa(Idoso* idoso);
+
+// Incrementa a quantidade de vezes que o idoso teve febre baixa
+void incrementarFebreBaixa(Idoso* idoso);
+
+// Reseta a quantidade de vezes que o idoso teve febre baixa
+void resetarFebreBaixa(Idoso* idoso);
+
 // Imprime o nome do idoso
 void imprimirIdoso(Idoso* idoso);
 

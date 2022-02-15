@@ -6,6 +6,7 @@ struct idoso {
     Lista *cuidadores;
     FILE *leituras;
     FILE *saida;
+    int febreBaixa;
 };
 
 Idoso *
@@ -17,11 +18,17 @@ inicializarIdoso(char *nome) {
     idoso->cuidadores = inicializarLista(LISTA_CUIDADORES);
 
     char caminhoEntrada[50], caminhoSaida[50];
-    sprintf(caminhoEntrada, "in/%s-saida.txt", idoso->nome);
+    sprintf(caminhoEntrada, "in/%s.txt", idoso->nome);
     sprintf(caminhoSaida, "out/%s-saida.txt", idoso->nome);
 
-    idoso->leituras = fopen(caminhoEntrada, "r");
-    idoso->saida = fopen(caminhoSaida, "w");
+    FILE *arqEntrada = fopen(caminhoEntrada, "r");
+
+    FILE *arqSaida = fopen(caminhoSaida, "w");
+
+    idoso->leituras = arqEntrada;
+    idoso->saida = arqSaida;
+
+    idoso->febreBaixa = 0;
 
     return idoso;
 }
@@ -40,6 +47,22 @@ Lista *meusCuidadores(Idoso *idoso) {
 
 FILE *leiturasIdoso(Idoso *idoso) {
     return idoso->leituras;
+}
+
+FILE *saidaIdoso(Idoso *idoso) {
+    return idoso->saida;
+}
+
+int febreBaixa(Idoso *idoso) {
+    return idoso->febreBaixa;
+}
+
+void incrementarFebreBaixa(Idoso *idoso) {
+    idoso->febreBaixa++;
+}
+
+void resetarFebreBaixa(Idoso *idoso) {
+    idoso->febreBaixa = 0;
 }
 
 void imprimirIdoso(Idoso *idoso) {

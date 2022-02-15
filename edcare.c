@@ -128,21 +128,56 @@ void proximaLeitura(EDCare *edcare) {
     edcare->leituraAtual++;
 
     Idoso *idoso = listaN(edcare->idosos, 0);
-
-    printf("idoso: %s", nomeIdoso(idoso));
-
     FILE *arq = leiturasIdoso(idoso);
+
+    if (!idoso) {
+        printf("idoso nao encontrado\n");
+        return;
+    }
+
+    if (!arq) {
+        printf("arquivo não encontrado\n");
+        return;
+    }
+
+    printf("idoso: %s\n", nomeIdoso(idoso));
+
     char linha[100];
     float temperatura;
     int latitude, longitude, queda;
 
-    fgets(linha, 100, arq);
-    printf("linha: %s", linha);
+    fgets(linha, 100, leiturasIdoso(idoso));
 
     sscanf(linha, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda);
 
-    printf("\nLeitura %d:\n", edcare->leituraAtual);
-    printf("temperatura:%f\nlatitude:%d\nlongitude:%d\nqueda:%d\n\n", temperatura, latitude, longitude, queda);
+    // se queda, acionar cuidador
+    if (queda) {
+        // encontrar cuidador mais próximo
+    }
+    // se febre alta, resetar febreBaixa e acionar cuidador
+    else if (temperatura > 38) {
+        resetarFebreBaixa(idoso);
+
+        // encontrar cuidador mais próximo
+        fprintf(saidaIdoso(idoso), "queda, acionou %s\n", "CuidadorX");
+
+    }
+    // febre baixa, acionar amigo ou cuidador se for recorrente
+    else if (temperatura > 37) {
+        incrementarFebreBaixa(idoso);
+
+        if (febreBaixa(idoso) >= 4) {
+            // encontrar cuidador mais próximo
+            fprintf(saidaIdoso(idoso), "febre baixa pela quarta vez, acionou %s\n", "CuidadorX");
+        }
+        // encontrar amigo mais próximo
+        else {
+            fprintf(saidaIdoso(idoso), "febre baixa, acionou amigo %s\n", "XXX");
+        }
+
+    } else {
+        fprintf(saidaIdoso(idoso), "tudo ok\n");
+    }
 }
 
 Lista *listaIdosos(EDCare *edcare) {
