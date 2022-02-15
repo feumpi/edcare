@@ -24,6 +24,9 @@ Lista* listaIdosos(EDCare* edcare);
 // Retorna a lista de todos os cuidadores do sistema
 Lista* listaCuidadores(EDCare* edcare);
 
+// Realiza a próxima leitura dos sensores
+void proximaLeitura(EDCare* edcare);
+
 // Libera a memória alocada para o EDCare e destrói as próprias listas
 void destruirEDCare(EDCare* edcare);
 

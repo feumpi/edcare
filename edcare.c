@@ -3,6 +3,7 @@
 struct edcare {
     Lista *idosos;
     Lista *cuidadores;
+    int leituraAtual;
 };
 
 EDCare *inicializarEDCare() {
@@ -10,6 +11,8 @@ EDCare *inicializarEDCare() {
 
     edcare->idosos = inicializarLista(LISTA_IDOSOS);
     edcare->cuidadores = inicializarLista(LISTA_CUIDADORES);
+
+    edcare->leituraAtual = -1;
 
     return edcare;
 }
@@ -119,6 +122,27 @@ void carregarCuidadores(EDCare *edcare) {
     }
 
     fclose(arq_cuidadores);
+}
+
+void proximaLeitura(EDCare *edcare) {
+    edcare->leituraAtual++;
+
+    Idoso *idoso = listaN(edcare->idosos, 0);
+
+    printf("idoso: %s", nomeIdoso(idoso));
+
+    FILE *arq = leiturasIdoso(idoso);
+    char linha[100];
+    float temperatura;
+    int latitude, longitude, queda;
+
+    fgets(linha, 100, arq);
+    printf("linha: %s", linha);
+
+    sscanf(linha, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda);
+
+    printf("\nLeitura %d:\n", edcare->leituraAtual);
+    printf("temperatura:%f\nlatitude:%d\nlongitude:%d\nqueda:%d\n\n", temperatura, latitude, longitude, queda);
 }
 
 Lista *listaIdosos(EDCare *edcare) {

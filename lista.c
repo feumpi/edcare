@@ -26,6 +26,26 @@ Lista *inicializarLista(int tipo) {
     return lista;
 }
 
+void *listaN(Lista *lista, int n) {
+    Celula *atual = lista->prim;
+    Celula *anterior = NULL;
+
+    int posAtual = 0;
+
+    while (atual && posAtual != n) {
+        anterior = atual;
+        atual = atual->prox;
+        posAtual++;
+    }
+
+    if (!atual) {
+        printf("pos %d invalida\n", n);
+        return NULL;
+    }
+
+    return atual->cont;
+}
+
 void imprimirLista(Lista *lista) {
     printf("----------\n");
     for (Celula *celula = lista->prim; celula != NULL; celula = celula->prox) {

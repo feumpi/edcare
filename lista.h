@@ -15,6 +15,9 @@ typedef struct celula Celula;
 // Cria uma lista do tipo LISTA_IDOSOS ou LISTA_CUIDADORES
 Lista *inicializarLista(int tipo);
 
+// Retorna o N elemento da lista
+void *listaN(Lista *lista, int n);
+
 // Insere um idoso ou cuidador no final da lista
 void inserirFim(Lista *lista, void *cont);
 
