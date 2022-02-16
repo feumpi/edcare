@@ -192,18 +192,19 @@ void realizarLeituras(EDCare *edcare) {
 
             // se queda, acionar cuidador
             if (queda) {
+                fprintf(saidaIdoso(idoso), "queda, acionou %s\n", "CuidadorX");
                 // encontrar cuidador mais próximo
             }
             // se febre alta, resetar febreBaixa e acionar cuidador
-            else if (temperatura > 38) {
+            else if (temperatura >= 38) {
                 resetarFebreBaixa(idoso);
 
                 // encontrar cuidador mais próximo
-                fprintf(saidaIdoso(idoso), "queda, acionou %s\n", "CuidadorX");
+                fprintf(saidaIdoso(idoso), "febre alta, acionou %s\n", "CuidadorX");
 
             }
             // febre baixa, acionar amigo ou cuidador se for recorrente
-            else if (temperatura > 37) {
+            else if (temperatura >= 37) {
                 incrementarFebreBaixa(idoso);
 
                 if (febreBaixa(idoso) >= 4) {
