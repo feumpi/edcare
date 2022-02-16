@@ -36,8 +36,8 @@ int quantosCuidadores(Idoso* idoso);
 // Realiza a próxima leitura do idoso e armazena na variável fornecida
 void proximaLeitura(Idoso* idoso, char* str);
 
-// Retorna o arquivo de saída do idoso
-FILE* saidaIdoso(Idoso* idoso);
+// Imprime uma saída no arquivo do idoso
+void imprimirSaida(Idoso* idoso, char* saida);
 
 // Retorna a quantidade de vezes que o idoso teve febre baixa
 int febreBaixa(Idoso* idoso);

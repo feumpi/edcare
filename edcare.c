@@ -175,13 +175,16 @@ void realizarLeituras(EDCare *edcare) {
             // Se os dados não foram lidos corretamente, houve falecimento (interromper idoso)
             if (sscanf(leitura, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda) != 4) {
                 registrarFalecimento(idoso);
-                fprintf(saidaIdoso(idoso), "falecimento\n");
+                imprimirSaida(idoso, "falecimento");
                 continue;
             }
 
+            char saida[100];
+
             // se queda, acionar cuidador
             if (queda) {
-                fprintf(saidaIdoso(idoso), "queda, acionou %s\n", "CuidadorX");
+                sprintf(saida, "queda, acionou %s", "CuidadorX");
+                imprimirSaida(idoso, saida);
                 // encontrar cuidador mais próximo
             }
             // se febre alta, resetar febreBaixa e acionar cuidador
@@ -189,7 +192,8 @@ void realizarLeituras(EDCare *edcare) {
                 resetarFebreBaixa(idoso);
 
                 // encontrar cuidador mais próximo
-                fprintf(saidaIdoso(idoso), "febre alta, acionou %s\n", "CuidadorX");
+                sprintf(saida, "febre alta, acionou %s", "CuidadorX");
+                imprimirSaida(idoso, saida);
 
             }
             // febre baixa, acionar amigo ou cuidador se for recorrente
@@ -198,15 +202,18 @@ void realizarLeituras(EDCare *edcare) {
 
                 if (febreBaixa(idoso) >= 4) {
                     // encontrar cuidador mais próximo
-                    fprintf(saidaIdoso(idoso), "febre baixa pela quarta vez, acionou %s\n", "CuidadorX");
+                    sprintf(saida, "febre baixa pela quarta vez, acionou %s", "CuidadorX");
+                    imprimirSaida(idoso, saida);
                 }
                 // encontrar amigo mais próximo (considerar possivel falecimento)
                 else {
-                    fprintf(saidaIdoso(idoso), "febre baixa, acionou amigo %s\n", "XXX");
+                    sprintf(saida, "febre baixa, acionou amigo %s", "XXX");
+                    imprimirSaida(idoso, saida);
                 }
 
             } else {
-                fprintf(saidaIdoso(idoso), "tudo ok\n");
+                sprintf(saida, "tudo ok");
+                imprimirSaida(idoso, saida);
             }
         }
     }

@@ -73,8 +73,8 @@ void proximaLeitura(Idoso *idoso, char *str) {
     strcpy(str, linha);
 }
 
-FILE *saidaIdoso(Idoso *idoso) {
-    return idoso->saida;
+void imprimirSaida(Idoso *idoso, char *saida) {
+    fprintf(idoso->saida, "%s\n", saida);
 }
 
 int febreBaixa(Idoso *idoso) {
