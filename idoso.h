@@ -18,11 +18,23 @@ char* nomeIdoso(Idoso* idoso);
 // Retorna a lista de amigos (rede de apoio) do idoso
 Lista* meusAmigos(Idoso* idoso);
 
+// Incrementa a quantidade de amigos do idoso
+void incrementarAmigos(Idoso* idoso);
+
+// Retorna a quantidade de amigos do idoso
+int quantosAmigos(Idoso* idoso);
+
 // Retorna a lista de cuidadores do idoso
 Lista* meusCuidadores(Idoso* idoso);
 
-// Retorna o arquivo de leituras do idoso
-FILE* leiturasIdoso(Idoso* idoso);
+// Incrementa a quantidade de cuidadores do idoso
+void incrementarCuidadores(Idoso* idoso);
+
+// Retorna a quantidade de cuidadores do idoso
+int quantosCuidadores(Idoso* idoso);
+
+// Realiza a próxima leitura do idoso e armazena na variável fornecida
+void proximaLeitura(Idoso* idoso, char* str);
 
 // Retorna o arquivo de saída do idoso
 FILE* saidaIdoso(Idoso* idoso);

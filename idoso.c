@@ -47,12 +47,30 @@ Lista *meusAmigos(Idoso *idoso) {
     return idoso->amigos;
 }
 
+void incrementarAmigos(Idoso *idoso) {
+    idoso->quantidadeAmigos++;
+}
+
+int quantosAmigos(Idoso *idoso) {
+    return idoso->quantidadeAmigos;
+}
+
 Lista *meusCuidadores(Idoso *idoso) {
     return idoso->cuidadores;
 }
 
-FILE *leiturasIdoso(Idoso *idoso) {
-    return idoso->leituras;
+void incrementarCuidadores(Idoso *idoso) {
+    idoso->quantidadeCuidadores++;
+}
+
+int quantosCuidadores(Idoso *idoso) {
+    return idoso->quantidadeCuidadores;
+}
+
+void proximaLeitura(Idoso *idoso, char *str) {
+    char linha[100];
+    fgets(linha, 100, idoso->leituras);
+    strcpy(str, linha);
 }
 
 FILE *saidaIdoso(Idoso *idoso) {

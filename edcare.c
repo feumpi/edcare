@@ -56,17 +56,16 @@ void carregarIdosos(EDCare *edcare) {
 
             // se encontrado, enquanto houverem amigos na linha
             while (nomeAtual != NULL) {
-                // insere o idoso na lista de amigos, se encontrado
                 Idoso *amigo = encontrarNome(edcare->idosos, nomeAtual);
 
-                // printf("nomeAtual: '%s'\n", nomeAtual);
-                // printf("amigo: '%s'\n\n", nomeIdoso(amigo));
-
+                // insere o idoso na lista de amigos, se encontrado
                 if (amigo) {
                     inserirFim(meusAmigos(idosoAtual), amigo);
+                    incrementarAmigos(idosoAtual);
 
                     // também insere o idoso atual na lista do amigo
                     inserirFim(meusAmigos(amigo), idosoAtual);
+                    incrementarAmigos(amigo);
                 }
 
                 nomeAtual = strtok(NULL, " ;\n");
@@ -141,6 +140,7 @@ void carregarCuidadores(EDCare *edcare) {
 
                 if (cuidador) {
                     inserirFim(meusCuidadores(idosoAtual), cuidador);
+                    incrementarCuidadores(idosoAtual);
                 }
 
                 nomeAtual = strtok(NULL, " ;\n");
@@ -160,31 +160,20 @@ void realizarLeituras(EDCare *edcare) {
         // Para cada idoso da lista
         for (int i = 0; i < edcare->quantidadeIdosos; i++) {
             Idoso *idoso = listaN(edcare->idosos, i);
-            FILE *arq = leiturasIdoso(idoso);
-
-            if (!idoso) {
-                printf("idoso nao encontrado\n");
-                continue;
-            }
-
-            if (!arq) {
-                printf("arquivo não encontrado\n");
-                continue;
-            }
 
             // Ignora idoso que já faleceu
             if (idosoFaleceu(idoso)) {
                 continue;
             }
 
-            char linha[100];
+            char leitura[100];
             float temperatura;
             int latitude, longitude, queda;
 
-            fgets(linha, 100, leiturasIdoso(idoso));
+            proximaLeitura(idoso, leitura);
 
             // Se os dados não foram lidos corretamente, houve falecimento (interromper idoso)
-            if (sscanf(linha, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda) != 4) {
+            if (sscanf(leitura, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda) != 4) {
                 registrarFalecimento(idoso);
                 fprintf(saidaIdoso(idoso), "falecimento\n");
                 continue;
