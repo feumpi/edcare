@@ -5,7 +5,7 @@ struct edcare {
     Lista *cuidadores;
     int leituraAtual;
     int quantidadeIdosos;
-    int quantidadeCuidadoes;
+    int quantidadeCuidadores;
     int quantidadeLeituras;
     int acabou;
 };
@@ -18,7 +18,7 @@ EDCare *inicializarEDCare() {
 
     edcare->leituraAtual = -1;
     edcare->quantidadeIdosos = 0;
-    edcare->quantidadeCuidadoes = 0;
+    edcare->quantidadeCuidadores = 0;
     edcare->quantidadeLeituras = 0;
 
     return edcare;
@@ -95,10 +95,10 @@ void carregarCuidadores(EDCare *edcare) {
                 // printf("cuidador criado: '%s'\n", nomeCuidador(cuidador));
                 if (cuidador) {
                     inserirFim(edcare->cuidadores, cuidador);
-                    edcare->quantidadeCuidadoes++;
+                    edcare->quantidadeCuidadores++;
 
                     // Se apenas 1 cuidador carregado, determinar a quantidade de leituras
-                    if (edcare->quantidadeCuidadoes == 1) {
+                    if (edcare->quantidadeCuidadores == 1) {
                         // abrir o arquivo leituras do cuidador, contar as linhas, salvar e voltar pro começo
                         int linhas = 0;
                         char c;
