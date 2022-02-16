@@ -6,7 +6,10 @@ struct idoso {
     Lista *cuidadores;
     FILE *leituras;
     FILE *saida;
+    int quantidadeAmigos;
+    int quantidadeCuidadores;
     int febreBaixa;
+    int faleceu;
 };
 
 Idoso *
@@ -28,7 +31,10 @@ inicializarIdoso(char *nome) {
     idoso->leituras = arqEntrada;
     idoso->saida = arqSaida;
 
+    idoso->quantidadeAmigos = 0;
+    idoso->quantidadeCuidadores = 0;
     idoso->febreBaixa = 0;
+    idoso->faleceu = 0;
 
     return idoso;
 }
@@ -63,6 +69,14 @@ void incrementarFebreBaixa(Idoso *idoso) {
 
 void resetarFebreBaixa(Idoso *idoso) {
     idoso->febreBaixa = 0;
+}
+
+int idosoFaleceu(Idoso *idoso) {
+    return idoso->faleceu;
+}
+
+void registrarFalecimento(Idoso *idoso) {
+    idoso->faleceu = 1;
 }
 
 void imprimirIdoso(Idoso *idoso) {

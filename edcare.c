@@ -164,12 +164,17 @@ void realizarLeituras(EDCare *edcare) {
 
             if (!idoso) {
                 printf("idoso nao encontrado\n");
-                return;
+                continue;
             }
 
             if (!arq) {
                 printf("arquivo não encontrado\n");
-                return;
+                continue;
+            }
+
+            // Ignora idoso que já faleceu
+            if (idosoFaleceu(idoso)) {
+                continue;
             }
 
             char linha[100];
@@ -180,7 +185,8 @@ void realizarLeituras(EDCare *edcare) {
 
             // Se os dados não foram lidos corretamente, houve falecimento (interromper idoso)
             if (sscanf(linha, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda) != 4) {
-                // tratar falecimento
+                registrarFalecimento(idoso);
+                fprintf(saidaIdoso(idoso), "falecimento\n");
                 continue;
             }
 
@@ -204,7 +210,7 @@ void realizarLeituras(EDCare *edcare) {
                     // encontrar cuidador mais próximo
                     fprintf(saidaIdoso(idoso), "febre baixa pela quarta vez, acionou %s\n", "CuidadorX");
                 }
-                // encontrar amigo mais próximo
+                // encontrar amigo mais próximo (considerar possivel falecimento)
                 else {
                     fprintf(saidaIdoso(idoso), "febre baixa, acionou amigo %s\n", "XXX");
                 }

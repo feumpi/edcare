@@ -36,6 +36,12 @@ void incrementarFebreBaixa(Idoso* idoso);
 // Reseta a quantidade de vezes que o idoso teve febre baixa
 void resetarFebreBaixa(Idoso* idoso);
 
+// Retorna 1 se o idoso faleceu, ou 0 se não
+int idosoFaleceu(Idoso* idoso);
+
+// Registra que houve falecimento do idoso
+void registrarFalecimento(Idoso* idoso);
+
 // Imprime o nome do idoso
 void imprimirIdoso(Idoso* idoso);
 
