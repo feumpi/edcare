@@ -6,6 +6,8 @@ struct edcare {
     int leituraAtual;
     int quantidadeIdosos;
     int quantidadeCuidadoes;
+    int quantidadeLeituras;
+    int acabou;
 };
 
 EDCare *inicializarEDCare() {
@@ -17,6 +19,7 @@ EDCare *inicializarEDCare() {
     edcare->leituraAtual = -1;
     edcare->quantidadeIdosos = 0;
     edcare->quantidadeCuidadoes = 0;
+    edcare->quantidadeLeituras = 0;
 
     return edcare;
 }
@@ -94,6 +97,25 @@ void carregarCuidadores(EDCare *edcare) {
                 if (cuidador) {
                     inserirFim(edcare->cuidadores, cuidador);
                     edcare->quantidadeCuidadoes++;
+
+                    // Se apenas 1 cuidador carregado, determinar a quantidade de leituras
+                    if (edcare->quantidadeCuidadoes == 1) {
+                        // abrir o arquivo leituras do cuidador, contar as linhas, salvar e voltar pro começo
+                        int linhas = 0;
+                        char c;
+
+                        // enquanto não achar o fim do arquivo, lê um novo char e incrementa linhas de for \n
+                        while (!feof(leiturasCuidador(cuidador))) {
+                            c = getc(leiturasCuidador(cuidador));
+                            if (c == '\n') linhas++;
+                        }
+
+                        // salva a quantidade de linhas (leituras)
+                        edcare->quantidadeLeituras = linhas;
+
+                        // volta pro começo do arquivo
+                        rewind(leiturasCuidador(cuidador));
+                    }
                 }
 
                 nomeAtual = strtok(NULL, " ;\n");
@@ -131,34 +153,37 @@ void carregarCuidadores(EDCare *edcare) {
     fclose(arq_cuidadores);
 }
 
-void proximaLeitura(EDCare *edcare) {
-    edcare->leituraAtual++;
+void realizarLeituras(EDCare *edcare) {
+    while (edcare->leituraAtual < edcare->quantidadeLeituras - 1) {
+        edcare->leituraAtual++;
 
-    // Para cada idoso da lista
-    for (int i = 0; i < edcare->quantidadeIdosos; i++) {
-        Idoso *idoso = listaN(edcare->idosos, i);
-        FILE *arq = leiturasIdoso(idoso);
+        // Para cada idoso da lista
+        for (int i = 0; i < edcare->quantidadeIdosos; i++) {
+            Idoso *idoso = listaN(edcare->idosos, i);
+            FILE *arq = leiturasIdoso(idoso);
 
-        if (!idoso) {
-            printf("idoso nao encontrado\n");
-            return;
-        }
+            if (!idoso) {
+                printf("idoso nao encontrado\n");
+                return;
+            }
 
-        if (!arq) {
-            printf("arquivo não encontrado\n");
-            return;
-        }
+            if (!arq) {
+                printf("arquivo não encontrado\n");
+                return;
+            }
 
-        printf("idoso: %s\n", nomeIdoso(idoso));
+            char linha[100];
+            float temperatura;
+            int latitude, longitude, queda;
 
-        char linha[100];
-        float temperatura;
-        int latitude, longitude, queda;
+            fgets(linha, 100, leiturasIdoso(idoso));
 
-        fgets(linha, 100, leiturasIdoso(idoso));
+            // Se os dados não foram lidos corretamente, houve falecimento (interromper idoso)
+            if (sscanf(linha, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda) != 4) {
+                // tratar falecimento
+                break;
+            }
 
-        // Se os 4 dados foram lidos corretamente
-        if (sscanf(linha, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda) == 4) {
             // se queda, acionar cuidador
             if (queda) {
                 // encontrar cuidador mais próximo

@@ -11,7 +11,9 @@
 #define IDOSOS 0
 #define CUIDADORES 1
 
-// TODO: Implementar loop para repetir proximaLeitura() enquanto houverem novas
+// FIXME: saidas de Alice continuam mesmo apos interrupção de leituras (falecimento)
+// FIXME: alguns idosos tem apenas 4 saidas em vez de 5, apesar de não haver falecimento
+// FIXME: verificar acontecimentos com tratamento errado (ex. registro queda em vez de febre alta)
 // TODO: Implementar a parte de encontrar o cuidador/amigo mais próximp
 
 int main() {
@@ -37,7 +39,7 @@ int main() {
         imprimirLista(meusCuidadores(idoso));
     } */
 
-    proximaLeitura(edcare);
+    realizarLeituras(edcare);
 
     return 0;
 }
