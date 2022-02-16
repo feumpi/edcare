@@ -52,6 +52,7 @@ void incrementarAmigos(Idoso *idoso) {
 }
 
 Idoso *amigoMaisProximo(Idoso *idoso, int latitude, int longitude) {
+    // iterar amigos
 }
 
 Lista *meusCuidadores(Idoso *idoso) {
@@ -59,6 +60,7 @@ Lista *meusCuidadores(Idoso *idoso) {
 }
 
 Cuidador *cuidadorMaisProximo(Idoso *idoso, int latitude, int longitude) {
+    // iterar cuidadores, usar leituraCuidador() para achar lat:long de cada um
 }
 
 void incrementarCuidadores(Idoso *idoso) {

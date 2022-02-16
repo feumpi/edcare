@@ -11,12 +11,14 @@
 #define IDOSOS 0
 #define CUIDADORES 1
 
-// TODO: Implementar a parte de encontrar o cuidador/amigo mais próximp
-// TODO: usar quantidadeAmigos e quantidadeCuidadores para iterar as listas do idosos e achar o mais proximo
-// TODO: considerar falecimento ao procurar amigo mais próximo
-// TODO: fechar os vazamentos de memória usando destrutores e free()
-// TODO: documentar o trabalho corretamente, criar diagramas
-// TODO: fazer um makefile
+// TODO: adicionar int latitude, int longitude ao TAD idoso para expor aos amigos?
+//  TODO: Implementar a parte de encontrar o cuidador/amigo mais próximp
+//  TODO: usar quantidadeAmigos e quantidadeCuidadores para iterar as listas do idosos e achar o mais proximo
+// TODO: usar leituraCuidador() para obter latitude e longitude dele
+//  TODO: considerar falecimento ao procurar amigo mais próximo
+//  TODO: fechar os vazamentos de memória usando destrutores e free()
+//  TODO: documentar o trabalho corretamente, criar diagramas
+//  TODO: fazer um makefile
 
 int main() {
     printf("EDCare\n\n");

@@ -26,6 +26,13 @@ FILE *leiturasCuidador(Cuidador *cuidador) {
     return cuidador->leituras;
 }
 
+void leituraCuidador(Cuidador *cuidador, int *latitude, int *longitude) {
+    char linha[100];
+    fgets(linha, 100, cuidador->leituras);
+
+    sscanf(linha, "%d;%d", latitude, longitude);
+}
+
 void imprimirCuidador(Cuidador *cuidador) {
     printf("Cuidador: %s\n", cuidador->nome);
 }
