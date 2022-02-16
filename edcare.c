@@ -181,7 +181,7 @@ void realizarLeituras(EDCare *edcare) {
             // Se os dados não foram lidos corretamente, houve falecimento (interromper idoso)
             if (sscanf(linha, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda) != 4) {
                 // tratar falecimento
-                break;
+                continue;
             }
 
             // se queda, acionar cuidador
