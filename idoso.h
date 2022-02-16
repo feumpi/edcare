@@ -7,6 +7,7 @@
 #include "cuidador.h"
 #include "leitura.h"
 #include "lista.h"
+#include "math.h"
 
 typedef struct idoso Idoso;
 
@@ -36,6 +37,12 @@ void incrementarCuidadores(Idoso* idoso);
 
 // Realiza a próxima leitura do idoso e armazena os dados nos ponteiros fornecidos
 void leituraIdoso(Idoso* idoso, int* falecimento, int* queda, float* temperatura, int* latitude, int* longitude);
+
+// Retorna a latitude do idoso
+int minhaLatitude(Idoso* idoso);
+
+// Retorna a longitude do idoso
+int minhaLongitude(Idoso* idoso);
 
 // Imprime uma saída no arquivo do idoso
 void imprimirSaida(Idoso* idoso, char* saida);

@@ -206,7 +206,7 @@ void realizarLeituras(EDCare *edcare) {
                 }
                 // encontrar amigo mais próximo (considerar possivel falecimento)
                 else {
-                    sprintf(saida, "febre baixa, acionou amigo %s", "XXX");
+                    sprintf(saida, "febre baixa, acionou amigo %s", nomeIdoso(amigoMaisProximo(idoso, latitude, longitude)));
                     imprimirSaida(idoso, saida);
                 }
 

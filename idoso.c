@@ -10,6 +10,8 @@ struct idoso {
     int quantidadeCuidadores;
     int febreBaixa;
     int faleceu;
+    int latitude;
+    int longitude;
 };
 
 Idoso *
@@ -35,6 +37,8 @@ inicializarIdoso(char *nome) {
     idoso->quantidadeCuidadores = 0;
     idoso->febreBaixa = 0;
     idoso->faleceu = 0;
+    idoso->latitude = 0;
+    idoso->longitude = 0;
 
     return idoso;
 }
@@ -52,7 +56,23 @@ void incrementarAmigos(Idoso *idoso) {
 }
 
 Idoso *amigoMaisProximo(Idoso *idoso, int latitude, int longitude) {
-    // iterar amigos
+    int distancia, menorDistancia, indiceMenor;
+
+    for (int i = 0; i < idoso->quantidadeAmigos; i++) {
+        Idoso *amigo = listaN(idoso->amigos, i);
+
+        int distY = abs(latitude - minhaLatitude(amigo));
+        int distX = abs(longitude - minhaLongitude(amigo));
+
+        distancia = sqrt(pow(distY, 2) + pow(distX, 2));
+
+        if (i == 0 || distancia < menorDistancia) {
+            menorDistancia = distancia;
+            indiceMenor = i;
+        }
+    }
+
+    return listaN(idoso->amigos, indiceMenor);
 }
 
 Lista *meusCuidadores(Idoso *idoso) {
@@ -75,6 +95,18 @@ void leituraIdoso(Idoso *idoso, int *falecimento, int *queda, float *temperatura
         *falecimento = 1;
         idoso->faleceu = 1;
     }
+
+    // salva a posição para uso dos amigos
+    idoso->latitude = *latitude;
+    idoso->longitude = *longitude;
+}
+
+int minhaLatitude(Idoso *idoso) {
+    return idoso->latitude;
+}
+
+int minhaLongitude(Idoso *idoso) {
+    return idoso->longitude;
 }
 
 void imprimirSaida(Idoso *idoso, char *saida) {
