@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "cuidador.h"
 #include "leitura.h"
 #include "lista.h"
 
@@ -21,20 +22,20 @@ Lista* meusAmigos(Idoso* idoso);
 // Incrementa a quantidade de amigos do idoso
 void incrementarAmigos(Idoso* idoso);
 
-// Retorna a quantidade de amigos do idoso
-int quantosAmigos(Idoso* idoso);
+// Retorna o amigo mais próximo da posição informada
+Idoso* amigoMaisProximo(Idoso* idoso, int latitude, int longitude);
 
 // Retorna a lista de cuidadores do idoso
 Lista* meusCuidadores(Idoso* idoso);
 
+// Retorna o cuidador mais próximo da posição informada
+Cuidador* cuidadorMaisProximo(Idoso* idoso, int latitude, int longitude);
+
 // Incrementa a quantidade de cuidadores do idoso
 void incrementarCuidadores(Idoso* idoso);
 
-// Retorna a quantidade de cuidadores do idoso
-int quantosCuidadores(Idoso* idoso);
-
-// Realiza a próxima leitura do idoso e armazena na variável fornecida
-void proximaLeitura(Idoso* idoso, char* str);
+// Realiza a próxima leitura do idoso e armazena os dados nos ponteiros fornecidos
+void leituraIdoso(Idoso* idoso, int* falecimento, int* queda, float* temperatura, int* latitude, int* longitude);
 
 // Imprime uma saída no arquivo do idoso
 void imprimirSaida(Idoso* idoso, char* saida);

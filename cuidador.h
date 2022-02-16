@@ -15,7 +15,10 @@ Cuidador* inicializarCuidador(char* nome);
 // Retorna o nome do cuidador
 char* nomeCuidador(Cuidador* cuidador);
 
-// Retorna o arquivo com as leituras do cuidador
+// Retorna a próxima leitura do cuidador
+void leituraCuidador(Cuidador* cuidador, char* str);
+
+// temporario: retorna o arquivo de leituras do cuidador
 FILE* leiturasCuidador(Cuidador* cuidador);
 
 // Imprime o nome do cuidador

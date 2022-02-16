@@ -51,26 +51,28 @@ void incrementarAmigos(Idoso *idoso) {
     idoso->quantidadeAmigos++;
 }
 
-int quantosAmigos(Idoso *idoso) {
-    return idoso->quantidadeAmigos;
+Idoso *amigoMaisProximo(Idoso *idoso, int latitude, int longitude) {
 }
 
 Lista *meusCuidadores(Idoso *idoso) {
     return idoso->cuidadores;
 }
 
+Cuidador *cuidadorMaisProximo(Idoso *idoso, int latitude, int longitude) {
+}
+
 void incrementarCuidadores(Idoso *idoso) {
     idoso->quantidadeCuidadores++;
 }
 
-int quantosCuidadores(Idoso *idoso) {
-    return idoso->quantidadeCuidadores;
-}
-
-void proximaLeitura(Idoso *idoso, char *str) {
+void leituraIdoso(Idoso *idoso, int *falecimento, int *queda, float *temperatura, int *latitude, int *longitude) {
     char linha[100];
     fgets(linha, 100, idoso->leituras);
-    strcpy(str, linha);
+
+    if (sscanf(linha, "%f;%d;%d;%d", temperatura, latitude, longitude, queda) != 4) {
+        *falecimento = 1;
+        idoso->faleceu = 1;
+    }
 }
 
 void imprimirSaida(Idoso *idoso, char *saida) {

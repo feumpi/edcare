@@ -168,13 +168,12 @@ void realizarLeituras(EDCare *edcare) {
 
             char leitura[100];
             float temperatura;
-            int latitude, longitude, queda;
+            int falecimento = 0, queda = 0, latitude, longitude;
 
-            proximaLeitura(idoso, leitura);
+            leituraIdoso(idoso, &falecimento, &queda, &temperatura, &latitude, &longitude);
 
-            // Se os dados não foram lidos corretamente, houve falecimento (interromper idoso)
-            if (sscanf(leitura, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda) != 4) {
-                registrarFalecimento(idoso);
+            // Se houve falecimento, interromper tratamento do idoso
+            if (falecimento) {
                 imprimirSaida(idoso, "falecimento");
                 continue;
             }
