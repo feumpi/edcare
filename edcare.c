@@ -166,14 +166,10 @@ void realizarLeituras(EDCare *edcare) {
                 continue;
             }
 
-            char leitura[100];
-            float temperatura;
-            int falecimento = 0, queda = 0, latitude, longitude;
-
-            leituraIdoso(idoso, &falecimento, &queda, &temperatura, &latitude, &longitude);
+            Leitura *leitura = leituraIdoso(idoso);
 
             // Se houve falecimento, interromper tratamento do idoso
-            if (falecimento) {
+            if (leituraFalecimento(leitura)) {
                 imprimirSaida(idoso, "falecimento");
                 continue;
             }
@@ -181,13 +177,13 @@ void realizarLeituras(EDCare *edcare) {
             char saida[100];
 
             // se queda, acionar cuidador
-            if (queda) {
+            if (leituraQueda(leitura)) {
                 sprintf(saida, "queda, acionou %s", "CuidadorX");
                 imprimirSaida(idoso, saida);
                 // encontrar cuidador mais próximo
             }
             // se febre alta, resetar febreBaixa e acionar cuidador
-            else if (temperatura >= 38) {
+            else if (leituraTemperatura(leitura) >= 38) {
                 resetarFebreBaixa(idoso);
 
                 // encontrar cuidador mais próximo
@@ -196,7 +192,7 @@ void realizarLeituras(EDCare *edcare) {
 
             }
             // febre baixa, acionar amigo ou cuidador se for recorrente
-            else if (temperatura >= 37) {
+            else if (leituraTemperatura(leitura) >= 37) {
                 incrementarFebreBaixa(idoso);
 
                 if (febreBaixa(idoso) >= 4) {
@@ -206,7 +202,7 @@ void realizarLeituras(EDCare *edcare) {
                 }
                 // encontrar amigo mais próximo (considerar possivel falecimento)
                 else {
-                    sprintf(saida, "febre baixa, acionou amigo %s", nomeIdoso(amigoMaisProximo(idoso, latitude, longitude)));
+                    sprintf(saida, "febre baixa, acionou amigo %s", nomeIdoso(amigoMaisProximo(idoso, leituraLatitude(leitura), leituraLongitude(leitura))));
                     imprimirSaida(idoso, saida);
                 }
 

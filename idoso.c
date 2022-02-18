@@ -56,15 +56,15 @@ void incrementarAmigos(Idoso *idoso) {
 }
 
 Idoso *amigoMaisProximo(Idoso *idoso, int latitude, int longitude) {
-    int distancia, menorDistancia, indiceMenor;
+    int distancia, menorDistancia, indiceMenor = 0;
 
     for (int i = 0; i < idoso->quantidadeAmigos; i++) {
         Idoso *amigo = listaN(idoso->amigos, i);
 
-        int distY = abs(latitude - minhaLatitude(amigo));
-        int distX = abs(longitude - minhaLongitude(amigo));
+        int distY = latitude - minhaLatitude(amigo);
+        int distX = longitude - minhaLongitude(amigo);
 
-        distancia = sqrt(pow(distY, 2) + pow(distX, 2));
+        distancia = sqrt(pow(distX, 2) + pow(distY, 2));
 
         if (i == 0 || distancia < menorDistancia) {
             menorDistancia = distancia;
@@ -87,18 +87,23 @@ void incrementarCuidadores(Idoso *idoso) {
     idoso->quantidadeCuidadores++;
 }
 
-void leituraIdoso(Idoso *idoso, int *falecimento, int *queda, float *temperatura, int *latitude, int *longitude) {
+Leitura *leituraIdoso(Idoso *idoso) {
     char linha[100];
+    int falecimento = 0, queda, latitude, longitude;
+    float temperatura;
+
     fgets(linha, 100, idoso->leituras);
 
-    if (sscanf(linha, "%f;%d;%d;%d", temperatura, latitude, longitude, queda) != 4) {
-        *falecimento = 1;
+    if (sscanf(linha, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda) != 4) {
+        falecimento = 1;
         idoso->faleceu = 1;
     }
 
     // salva a posição para uso dos amigos
-    idoso->latitude = *latitude;
-    idoso->longitude = *longitude;
+    idoso->latitude = latitude;
+    idoso->longitude = longitude;
+
+    return inicializarLeitura(falecimento, queda, latitude, longitude, temperatura);
 }
 
 int minhaLatitude(Idoso *idoso) {

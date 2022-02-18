@@ -5,8 +5,25 @@
 
 typedef struct leitura Leitura;
 
-Leitura *inicializarLeitura(float latitude, float longitude, float temperatura, int queda);
+// Inicializa um objeto leitura com os dados informados
+Leitura* inicializarLeitura(int falecimento, int queda, int latitude, int longitude, float temperatura);
 
-void destruirLeitura(Leitura *leitura);
+// Retorna se houve falecimento na leitura
+int leituraFalecimento(Leitura* leitura);
+
+// Retorna se houve queda na leitura
+int leituraQueda(Leitura* leitura);
+
+// Retorna a latitude registrada na leitura
+int leituraLatitude(Leitura* leitura);
+
+// Retorna a longitude registrada na leitura
+int leituraLongitude(Leitura* leitura);
+
+// Retorna a temperatura registrada na leitura
+float leituraTemperatura(Leitura* leitura);
+
+// Libera a memória alocada para a leitura
+void destruirLeitura(Leitura* leitura);
 
 #endif
