@@ -12,6 +12,7 @@ struct idoso {
     int faleceu;
     int latitude;
     int longitude;
+    int leituraAtual;
 };
 
 Idoso *
@@ -39,6 +40,7 @@ inicializarIdoso(char *nome) {
     idoso->faleceu = 0;
     idoso->latitude = 0;
     idoso->longitude = 0;
+    idoso->leituraAtual = -1;
 
     return idoso;
 }
@@ -90,7 +92,7 @@ Cuidador *cuidadorMaisProximo(Idoso *idoso, int latitude, int longitude) {
         Cuidador *cuidador = listaN(idoso->cuidadores, i);
         int latCuidador, longCuidador;
 
-        leituraCuidador(cuidador, &latCuidador, &longCuidador);
+        posicaoCuidador(cuidador, idoso->leituraAtual, &latCuidador, &longCuidador);
         int distY = latitude - latCuidador;
         int distX = longitude - longCuidador;
 
@@ -125,6 +127,7 @@ Leitura *leituraIdoso(Idoso *idoso) {
     idoso->latitude = latitude;
     idoso->longitude = longitude;
 
+    idoso->leituraAtual++;
     return inicializarLeitura(falecimento, queda, latitude, longitude, temperatura);
 }
 

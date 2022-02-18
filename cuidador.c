@@ -3,6 +3,7 @@
 struct cuidador {
     char *nome;
     FILE *leituras;
+    int leituraAtual;
 };
 
 Cuidador *
@@ -15,6 +16,8 @@ inicializarCuidador(char *nome) {
     sprintf(caminho, "in/%s.txt", cuidador->nome);
     cuidador->leituras = fopen(caminho, "r");
 
+    cuidador->leituraAtual = -1;
+
     return cuidador;
 }
 
@@ -26,9 +29,14 @@ FILE *leiturasCuidador(Cuidador *cuidador) {
     return cuidador->leituras;
 }
 
-void leituraCuidador(Cuidador *cuidador, int *latitude, int *longitude) {
+void posicaoCuidador(Cuidador *cuidador, int indice, int *latitude, int *longitude) {
     char linha[100];
-    fgets(linha, 100, cuidador->leituras);
+
+    // Como nem todo cuidador é lido em toda "rodada", é preciso descartar as leituras de posição anteriores
+    while (cuidador->leituraAtual < indice) {
+        fgets(linha, 100, cuidador->leituras);
+        cuidador->leituraAtual++;
+    }
 
     sscanf(linha, "%d;%d", latitude, longitude);
 }

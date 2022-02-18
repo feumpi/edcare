@@ -15,8 +15,8 @@ Cuidador* inicializarCuidador(char* nome);
 // Retorna o nome do cuidador
 char* nomeCuidador(Cuidador* cuidador);
 
-// Realiza a próxima leitura do cuidador e guarda os dados nos ponteiros informados
-void leituraCuidador(Cuidador* cuidador, int* latitude, int* longitude);
+// Obtém a posição do cuidador no índice de leitura desejado e guarda nos ponteiros informados
+void posicaoCuidador(Cuidador* cuidador, int indice, int* latitude, int* longitude);
 
 // temporario: retorna o arquivo de leituras do cuidador
 FILE* leiturasCuidador(Cuidador* cuidador);
