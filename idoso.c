@@ -175,9 +175,18 @@ void imprimirIdoso(Idoso *idoso) {
 }
 
 void destruirIdoso(Idoso *idoso) {
-    destruirLista(idoso->amigos);
-    destruirLista(idoso->cuidadores);
-    destruirLista(idoso->historico);
+    printf("Destruindo idoso: %s\n", idoso->nome);
+    // Destrói a lista de amigos e cuidadores, sem destruir os elementos
+    destruirLista(idoso->amigos, 0);
+    destruirLista(idoso->cuidadores, 0);
+
+    // Destrói a lista de leituras, e os elementos
+    destruirLista(idoso->historico, 1);
+
+    free(idoso->nome);
+
+    // Fecha os arquivos
     fclose(idoso->leituras);
+    fclose(idoso->saida);
     free(idoso);
 }

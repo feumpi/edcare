@@ -41,5 +41,6 @@ float leituraTemperatura(Leitura* leitura) {
 }
 
 void destruirLeitura(Leitura* leitura) {
+    printf("destruindo leitura\n");
     free(leitura);
 }

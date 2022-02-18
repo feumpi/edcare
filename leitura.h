@@ -1,6 +1,7 @@
 #ifndef LEITURA_H
 #define LEITURA_H
 
+#include <stdio.h>
 #include <stdlib.h>
 
 typedef struct leitura Leitura;

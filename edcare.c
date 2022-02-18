@@ -223,7 +223,10 @@ Lista *listaCuidadores(EDCare *edcare) {
 }
 
 void destruirEDCare(EDCare *edcare) {
-    destruirLista(edcare->idosos);
-    destruirLista(edcare->cuidadores);
+    // Destrói as listas de idosos e cuidadores, e também os próprios elementos
+    destruirLista(edcare->idosos, 1);
+    destruirLista(edcare->cuidadores, 1);
+
+    // Libera o objeto EDCare
     free(edcare);
 }

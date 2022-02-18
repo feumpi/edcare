@@ -156,14 +156,23 @@ void *encontrarNome(Lista *lista, char *nome) {
     return NULL;
 }
 
-void destruirLista(Lista *lista) {
+void destruirLista(Lista *lista, int destruirElementos) {
+    printf("destruindo lista\n");
+
     Celula *atual = lista->prim;
     Celula *prox = atual->prox;
 
-    // Liberar todas as células
+    // Iterar a lista
     while (atual) {
+        // Destrói os elementos, se solicitado
+        if (destruirElementos && lista->tipo == LISTA_IDOSOS) destruirIdoso(atual->cont);
+        if (destruirElementos && lista->tipo == LISTA_CUIDADORES) destruirCuidador(atual->cont);
+        if (destruirElementos && lista->tipo == LISTA_LEITURAS) destruirLeitura(atual->cont);
+
+        // Libera a célula
         prox = atual->prox;
         free(atual);
+
         atual = prox;
     }
 

@@ -34,7 +34,7 @@ void *removerNaPosicao(Lista *lista, int pos);
 // Enontra e retorna um idoso ou cuidador da lista com o nome correspondente, ou NULL se não encontrado
 void *encontrarNome(Lista *lista, char *nome);
 
-// Libera a memória usada pela lista, mas não libera os elementos
-void destruirLista(Lista *lista);
+// Libera a memória usada pela lista, e também os elementos, se for solicitado
+void destruirLista(Lista *lista, int destruirElementos);
 
 #endif

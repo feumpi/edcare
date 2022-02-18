@@ -11,9 +11,10 @@
 #define IDOSOS 0
 #define CUIDADORES 1
 
-//    TODO: fechar os vazamentos de memória usando destrutores e free()
-//    TODO: documentar o trabalho corretamente, criar diagramas
-//    TODO: fazer um makefile
+// FIXME: corrigir erros do valgrind
+//     TODO: fechar os vazamentos de memória usando destrutores e free()
+//     TODO: documentar o trabalho corretamente, criar diagramas
+//     TODO: fazer um makefile
 
 int main() {
     printf("EDCare\n\n");
@@ -39,6 +40,8 @@ int main() {
     } */
 
     realizarLeituras(edcare);
+
+    destruirEDCare(edcare);
 
     return 0;
 }
