@@ -84,7 +84,25 @@ Lista *meusCuidadores(Idoso *idoso) {
 }
 
 Cuidador *cuidadorMaisProximo(Idoso *idoso, int latitude, int longitude) {
-    // iterar cuidadores, usar leituraCuidador() para achar lat:long de cada um
+    int distancia, menorDistancia, indiceMenor = 0;
+
+    for (int i = 0; i < idoso->quantidadeCuidadores; i++) {
+        Cuidador *cuidador = listaN(idoso->cuidadores, i);
+        int latCuidador, longCuidador;
+
+        leituraCuidador(cuidador, &latCuidador, &longCuidador);
+        int distY = latitude - latCuidador;
+        int distX = longitude - longCuidador;
+
+        distancia = sqrt(pow(distX, 2) + pow(distY, 2));
+
+        if (i == 0 || distancia < menorDistancia) {
+            menorDistancia = distancia;
+            indiceMenor = i;
+        }
+    }
+
+    return listaN(idoso->cuidadores, indiceMenor);
 }
 
 void incrementarCuidadores(Idoso *idoso) {

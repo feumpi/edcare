@@ -11,12 +11,12 @@
 #define IDOSOS 0
 #define CUIDADORES 1
 
-//   TODO: Implementar a parte de encontrar o cuidador mais próximp
-//  TODO: usar leituraCuidador() para obter latitude e longitude dele
-//   TODO: considerar falecimento ao procurar amigo mais próximo
-//   TODO: fechar os vazamentos de memória usando destrutores e free()
-//   TODO: documentar o trabalho corretamente, criar diagramas
-//   TODO: fazer um makefile
+// FIXME: na leitura 5 de joao, cuidador4 é acionado em vez do cuidador1
+// FIXME: na leitura 2 de Maria, cuidador1 é acionado em vez do cuidador3
+//  TODO: Salvar o histórico de leituras do idoso numa lista
+//    TODO: fechar os vazamentos de memória usando destrutores e free()
+//    TODO: documentar o trabalho corretamente, criar diagramas
+//    TODO: fazer um makefile
 
 int main() {
     printf("EDCare\n\n");

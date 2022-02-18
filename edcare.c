@@ -178,7 +178,7 @@ void realizarLeituras(EDCare *edcare) {
 
             // se queda, acionar cuidador
             if (leituraQueda(leitura)) {
-                sprintf(saida, "queda, acionou %s", "CuidadorX");
+                sprintf(saida, "queda, acionou %s", nomeCuidador(cuidadorMaisProximo(idoso, leituraLatitude(leitura), leituraLongitude(leitura))));
                 imprimirSaida(idoso, saida);
                 // encontrar cuidador mais próximo
             }
@@ -187,7 +187,7 @@ void realizarLeituras(EDCare *edcare) {
                 resetarFebreBaixa(idoso);
 
                 // encontrar cuidador mais próximo
-                sprintf(saida, "febre alta, acionou %s", "CuidadorX");
+                sprintf(saida, "febre alta, acionou %s", nomeCuidador(cuidadorMaisProximo(idoso, leituraLatitude(leitura), leituraLongitude(leitura))));
                 imprimirSaida(idoso, saida);
 
             }
@@ -197,7 +197,7 @@ void realizarLeituras(EDCare *edcare) {
 
                 if (febreBaixa(idoso) >= 4) {
                     // encontrar cuidador mais próximo
-                    sprintf(saida, "febre baixa pela quarta vez, acionou %s", "CuidadorX");
+                    sprintf(saida, "febre baixa pela quarta vez, acionou %s", nomeCuidador(cuidadorMaisProximo(idoso, leituraLatitude(leitura), leituraLongitude(leitura))));
                     imprimirSaida(idoso, saida);
                 }
                 // encontrar amigo mais próximo (considerar possivel falecimento)
