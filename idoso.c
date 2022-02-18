@@ -4,6 +4,7 @@ struct idoso {
     char *nome;
     Lista *amigos;
     Lista *cuidadores;
+    Lista *historico;
     FILE *leituras;
     FILE *saida;
     int quantidadeAmigos;
@@ -22,6 +23,7 @@ inicializarIdoso(char *nome) {
     idoso->nome = strdup(nome);
     idoso->amigos = inicializarLista(LISTA_IDOSOS);
     idoso->cuidadores = inicializarLista(LISTA_CUIDADORES);
+    idoso->historico = inicializarLista(LISTA_LEITURAS);
 
     char caminhoEntrada[50], caminhoSaida[50];
     sprintf(caminhoEntrada, "in/%s.txt", idoso->nome);
@@ -128,7 +130,12 @@ Leitura *leituraIdoso(Idoso *idoso) {
     idoso->longitude = longitude;
 
     idoso->leituraAtual++;
-    return inicializarLeitura(falecimento, queda, latitude, longitude, temperatura);
+
+    Leitura *leitura = inicializarLeitura(falecimento, queda, latitude, longitude, temperatura);
+
+    inserirFim(idoso->historico, leitura);
+
+    return leitura;
 }
 
 int minhaLatitude(Idoso *idoso) {
@@ -170,6 +177,7 @@ void imprimirIdoso(Idoso *idoso) {
 void destruirIdoso(Idoso *idoso) {
     destruirLista(idoso->amigos);
     destruirLista(idoso->cuidadores);
+    destruirLista(idoso->historico);
     fclose(idoso->leituras);
     free(idoso);
 }

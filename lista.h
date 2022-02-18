@@ -8,6 +8,7 @@
 
 #define LISTA_IDOSOS 0
 #define LISTA_CUIDADORES 1
+#define LISTA_LEITURAS 2
 
 typedef struct lista Lista;
 typedef struct celula Celula;
