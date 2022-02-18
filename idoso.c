@@ -61,6 +61,10 @@ Idoso *amigoMaisProximo(Idoso *idoso, int latitude, int longitude) {
     for (int i = 0; i < idoso->quantidadeAmigos; i++) {
         Idoso *amigo = listaN(idoso->amigos, i);
 
+        // Ignorar amigo que já faleceu
+        if (idosoFaleceu(amigo))
+            continue;
+
         int distY = latitude - minhaLatitude(amigo);
         int distX = longitude - minhaLongitude(amigo);
 

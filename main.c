@@ -11,7 +11,6 @@
 #define IDOSOS 0
 #define CUIDADORES 1
 
-// FIXME: amigoMaisProximo() retorna o idoso errado no caso do Pedro (Alice em vez de Joao)
 //   TODO: Implementar a parte de encontrar o cuidador mais próximp
 //  TODO: usar leituraCuidador() para obter latitude e longitude dele
 //   TODO: considerar falecimento ao procurar amigo mais próximo
