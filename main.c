@@ -12,7 +12,6 @@
 #define CUIDADORES 1
 
 // FIXME: verificar casos de teste 2 escolhendo amigo/cuidador incorreto (mas considerar falecimento) - rever cálculo da distancia em amigoMaisProximo() e cuidadorMaisProximo()
-//  FIXME: corrigir erros do valgrind
 // TODO: fechar os vazamentos de memória usando destrutores e free()
 // TODO: documentar o trabalho corretamente, criar diagramas
 // TODO: fazer um makefile

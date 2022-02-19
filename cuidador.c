@@ -31,14 +31,17 @@ FILE *leiturasCuidador(Cuidador *cuidador) {
 
 void posicaoCuidador(Cuidador *cuidador, int indice, int *latitude, int *longitude) {
     char linha[100];
+    int lido = 0;
 
     // Como nem todo cuidador é lido em toda "rodada", é preciso descartar as leituras de posição anteriores
     while (cuidador->leituraAtual < indice) {
-        fgets(linha, 100, cuidador->leituras);
+        // Se o fgets retorna um ponteiro != NULL e o indice desejado foi atingido, sinaliza que os valores podem ser lidos
+        if (fgets(linha, 100, cuidador->leituras) && cuidador->leituraAtual == indice) lido = 1;
         cuidador->leituraAtual++;
     }
 
-    sscanf(linha, "%d;%d", latitude, longitude);
+    // Lê da string a latitude e longitude se sinalizado anteriormente (corrige erro do valgrind)
+    if (lido) sscanf(linha, "%d;%d", latitude, longitude);
 }
 
 void imprimirCuidador(Cuidador *cuidador) {

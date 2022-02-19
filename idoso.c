@@ -60,7 +60,8 @@ void incrementarAmigos(Idoso *idoso) {
 }
 
 Idoso *amigoMaisProximo(Idoso *idoso, int latitude, int longitude) {
-    int distancia, menorDistancia, indiceMenor = 0;
+    // Valores precisam ser inicializados para evitar um erro no valgrind
+    int distancia = 999, menorDistancia = 999, indiceMenor = 0;
 
     for (int i = 0; i < idoso->quantidadeAmigos; i++) {
         Idoso *amigo = listaN(idoso->amigos, i);
@@ -92,7 +93,9 @@ Cuidador *cuidadorMaisProximo(Idoso *idoso, int latitude, int longitude) {
 
     for (int i = 0; i < idoso->quantidadeCuidadores; i++) {
         Cuidador *cuidador = listaN(idoso->cuidadores, i);
-        int latCuidador, longCuidador;
+
+        // Inicializando valores para corrigir um erro do valgrind
+        int latCuidador = 0, longCuidador = 0;
 
         posicaoCuidador(cuidador, idoso->leituraAtual, &latCuidador, &longCuidador);
         int distY = latitude - latCuidador;
