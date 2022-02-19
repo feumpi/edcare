@@ -32,17 +32,20 @@ void *listaN(Lista *lista, int n) {
 
     int posAtual = 0;
 
+    // Itera a lista até chegar na posição N
     while (atual && posAtual != n) {
         anterior = atual;
         atual = atual->prox;
         posAtual++;
     }
 
+    // Se a célula N não existir, retorna NULL
     if (!atual) {
         printf("pos %d invalida\n", n);
         return NULL;
     }
 
+    // Retorna o conteúdo da célula N
     return atual->cont;
 }
 

@@ -121,23 +121,22 @@ Leitura *leituraIdoso(Idoso *idoso) {
     int falecimento = 0, queda, latitude, longitude;
     float temperatura;
 
+    // Lê a próxima linha da leitura do idoso
     fgets(linha, 100, idoso->leituras);
-
+    // Se não for possível ler os 4 dados, houve falecimento
     if (sscanf(linha, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda) != 4) {
         falecimento = 1;
         idoso->faleceu = 1;
     }
 
-    // salva a posição para uso dos amigos
+    // salva a nova posição para uso dos amigos e incrementa o índice da leitura
     idoso->latitude = latitude;
     idoso->longitude = longitude;
-
     idoso->leituraAtual++;
 
+    // Cria o objeto Leitura com os dados obtidos, insere no histórico e o retorna
     Leitura *leitura = inicializarLeitura(falecimento, queda, latitude, longitude, temperatura);
-
     inserirFim(idoso->historico, leitura);
-
     return leitura;
 }
 
@@ -185,6 +184,7 @@ void destruirIdoso(Idoso *idoso) {
     // Destrói a lista de leituras, e os elementos
     destruirLista(idoso->historico, 1);
 
+    // Libera o char* nome
     free(idoso->nome);
 
     // Fecha os arquivos

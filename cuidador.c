@@ -12,6 +12,7 @@ inicializarCuidador(char *nome, int casoTeste) {
 
     cuidador->nome = strdup(nome);
 
+    // Carrega o arquivo de leituras do cuidador, no caso de teste especificado
     char caminho[50];
     sprintf(caminho, "in/%d/%s.txt", casoTeste, cuidador->nome);
     cuidador->leituras = fopen(caminho, "r");
@@ -33,14 +34,14 @@ void posicaoCuidador(Cuidador *cuidador, int indice, int *latitude, int *longitu
     char linha[100];
     int lido = 0;
 
-    // Como nem todo cuidador é lido em toda "rodada", é preciso descartar as leituras de posição anteriores
+    // Como nem todo cuidador é lido em toda "rodada", é preciso descartar as leituras de índices anteriores
     while (cuidador->leituraAtual < indice) {
         // Se o fgets retorna um ponteiro != NULL e o indice desejado foi atingido, sinaliza que os valores podem ser lidos
         if (fgets(linha, 100, cuidador->leituras) && cuidador->leituraAtual == indice) lido = 1;
         cuidador->leituraAtual++;
     }
 
-    // Lê da string a latitude e longitude se sinalizado anteriormente (corrige erro do valgrind)
+    // Lê da string a latitude e longitude, apenas se sinalizado anteriormente (corrige erro do valgrind)
     if (lido) sscanf(linha, "%d;%d", latitude, longitude);
 }
 

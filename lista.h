@@ -19,16 +19,16 @@ Lista *inicializarLista(int tipo);
 // Retorna o N elemento da lista
 void *listaN(Lista *lista, int n);
 
-// Insere um idoso ou cuidador no final da lista
+// Insere um elemento no final da lista
 void inserirFim(Lista *lista, void *cont);
 
-// Insere um idoso ou cuidador no começo da lista
+// Insere um elemento no começo da lista
 void inserirInicio(Lista *lista, void *cont);
 
 // Imprime o nome dos idosos ou cuidadores na lista
 void imprimirLista(Lista *lista);
 
-// Remove um idoso ou cuidador numa posição especifica da lista
+// Remove elemento numa posição especifica da lista
 void *removerNaPosicao(Lista *lista, int pos);
 
 // Enontra e retorna um idoso ou cuidador da lista com o nome correspondente, ou NULL se não encontrado

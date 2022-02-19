@@ -28,8 +28,7 @@ EDCare *inicializarEDCare(int casoTeste) {
 }
 
 void carregarIdosos(EDCare *edcare) {
-    // Abrir arquivo
-
+    // Carrega o arquivo da rede de apoio, para o caso de teste especificado
     char caminho[50];
     sprintf(caminho, "in/%d/apoio.txt", edcare->casoTeste);
     FILE *arq_apoio = fopen(caminho, "r");
@@ -38,7 +37,7 @@ void carregarIdosos(EDCare *edcare) {
 
     int contador = 0;
     while (fgets(linha, 100, arq_apoio)) {
-        // se for a primeira linha
+        // se for a primeira linha (nomes de todos os idosos)
         if (contador == 0) {
             // Enquanto encontrar nomes, cria idosos e adiciona na lista
             char *nomeAtual = strtok(linha, " ;\n");
@@ -53,11 +52,11 @@ void carregarIdosos(EDCare *edcare) {
         else {
             // primeiro nome (idoso a ser encontrado)
             char *nomeAtual = strtok(linha, " ;\n");
-            // printf("nomeAtual: '%s'\n", nomeAtual);
 
+            // encontra o idoso na lista
             Idoso *idosoAtual = encontrarNome(edcare->idosos, nomeAtual);
-            // printf("idosoAtual: '%s'\n\n", nomeIdoso(idosoAtual));
 
+            // próximo nome: amigo do idoso
             nomeAtual = strtok(NULL, " ;\n");
 
             // se encontrado, enquanto houverem amigos na linha
@@ -74,6 +73,7 @@ void carregarIdosos(EDCare *edcare) {
                     incrementarAmigos(amigo);
                 }
 
+                // avança para o próximo nome, se houver
                 nomeAtual = strtok(NULL, " ;\n");
             }
         }
@@ -85,7 +85,7 @@ void carregarIdosos(EDCare *edcare) {
 }
 
 void carregarCuidadores(EDCare *edcare) {
-    // Abrir arquivos
+    // Carrega o arquivo de cuidadores, para o caso de teste especificado
     char caminho[50];
     sprintf(caminho, "in/%d/cuidadores.txt", edcare->casoTeste);
     FILE *arq_cuidadores = fopen(caminho, "r");
@@ -94,18 +94,19 @@ void carregarCuidadores(EDCare *edcare) {
 
     int contador = 0;
     while (fgets(linha, 100, arq_cuidadores)) {
-        // se for a primeira linha
+        // se for a primeira linha (nomes de todos os cuidadores)
         if (contador == 0) {
             // Enquanto encontrar nomes, cria cuidadores e adiciona na lista
             char *nomeAtual = strtok(linha, " ;\n");
             while (nomeAtual != NULL) {
                 Cuidador *cuidador = inicializarCuidador(nomeAtual, edcare->casoTeste);
-                // printf("cuidador criado: '%s'\n", nomeCuidador(cuidador));
+
                 if (cuidador) {
                     inserirFim(edcare->cuidadores, cuidador);
                     edcare->quantidadeCuidadores++;
 
-                    // Se apenas 1 cuidador carregado, determinar a quantidade de leituras
+                    // Após carregar o primeiro cuidador, determinar a quantidade de leituras totais do caso
+                    // Necessário pois os idosos podem ter quantidade de leituras diferentes devido ao falecimento
                     if (edcare->quantidadeCuidadores == 1) {
                         // abrir o arquivo leituras do cuidador, contar as linhas, salvar e voltar pro começo
                         int linhas = 0;
@@ -132,13 +133,12 @@ void carregarCuidadores(EDCare *edcare) {
         else {
             // primeiro nome (idoso a ser encontrado)
             char *nomeAtual = strtok(linha, " ;\n");
-            // printf("nomeAtual: '%s'\n", nomeAtual);
 
             Idoso *idosoAtual = encontrarNome(edcare->idosos, nomeAtual);
             // printf("idosoAtual: '%s'\n\n", nomeAtual);
 
+            // próximo nome: cuidador
             nomeAtual = strtok(NULL, " ;\n");
-            // printf("nomeAtual: '%s'\n", nomeAtual);
 
             // se encontrado, enquanto houverem cuidadores na linha
             while (nomeAtual != NULL) {
@@ -151,8 +151,8 @@ void carregarCuidadores(EDCare *edcare) {
                     incrementarCuidadores(idosoAtual);
                 }
 
+                // avança para o nome do próximo cuidador, se houver
                 nomeAtual = strtok(NULL, " ;\n");
-                // printf("nomeAtual: '%s'\n", nomeAtual);
             }
         }
         contador++;
@@ -174,9 +174,10 @@ void realizarLeituras(EDCare *edcare) {
                 continue;
             }
 
+            // Obtém a próxima leitura do idoso atual
             Leitura *leitura = leituraIdoso(idoso);
 
-            // Se houve falecimento, interromper tratamento do idoso
+            // Se houver falecimento, interromper tratamento do idoso
             if (leituraFalecimento(leitura)) {
                 imprimirSaida(idoso, "falecimento");
                 continue;
@@ -184,17 +185,16 @@ void realizarLeituras(EDCare *edcare) {
 
             char saida[100];
 
-            // se queda, acionar cuidador
+            // se queda, acionar cuidador mais próximo
             if (leituraQueda(leitura)) {
                 sprintf(saida, "queda, acionou %s", nomeCuidador(cuidadorMaisProximo(idoso, leituraLatitude(leitura), leituraLongitude(leitura))));
                 imprimirSaida(idoso, saida);
                 // encontrar cuidador mais próximo
             }
-            // se febre alta, resetar febreBaixa e acionar cuidador
+            // se febre alta, resetar febreBaixa e acionar cuidador mais próximo
             else if (leituraTemperatura(leitura) >= 38) {
                 resetarFebreBaixa(idoso);
 
-                // encontrar cuidador mais próximo
                 sprintf(saida, "febre alta, acionou %s", nomeCuidador(cuidadorMaisProximo(idoso, leituraLatitude(leitura), leituraLongitude(leitura))));
                 imprimirSaida(idoso, saida);
 
@@ -203,18 +203,20 @@ void realizarLeituras(EDCare *edcare) {
             else if (leituraTemperatura(leitura) >= 37) {
                 incrementarFebreBaixa(idoso);
 
+                // se a febre baixa já ocorreu 4 ou mais vezes, cuidador mais próximo
                 if (febreBaixa(idoso) >= 4) {
-                    // encontrar cuidador mais próximo
                     sprintf(saida, "febre baixa pela quarta vez, acionou %s", nomeCuidador(cuidadorMaisProximo(idoso, leituraLatitude(leitura), leituraLongitude(leitura))));
                     imprimirSaida(idoso, saida);
                 }
-                // encontrar amigo mais próximo (considerar possivel falecimento)
+                // se não for recorrente, amigo mais próximo
                 else {
                     sprintf(saida, "febre baixa, acionou amigo %s", nomeIdoso(amigoMaisProximo(idoso, leituraLatitude(leitura), leituraLongitude(leitura))));
                     imprimirSaida(idoso, saida);
                 }
 
-            } else {
+            }
+            // nada ocorreu
+            else {
                 sprintf(saida, "tudo ok");
                 imprimirSaida(idoso, saida);
             }
