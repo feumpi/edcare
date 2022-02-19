@@ -157,8 +157,6 @@ void *encontrarNome(Lista *lista, char *nome) {
 }
 
 void destruirLista(Lista *lista, int destruirElementos) {
-    printf("destruindo lista\n");
-
     Celula *atual = lista->prim;
     Celula *prox = atual->prox;
 

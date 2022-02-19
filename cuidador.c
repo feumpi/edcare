@@ -46,7 +46,6 @@ void imprimirCuidador(Cuidador *cuidador) {
 }
 
 void destruirCuidador(Cuidador *cuidador) {
-    printf("Destruindo cuidador: %s\n", cuidador->nome);
     fclose(cuidador->leituras);
 
     free(cuidador->nome);

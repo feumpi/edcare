@@ -175,7 +175,6 @@ void imprimirIdoso(Idoso *idoso) {
 }
 
 void destruirIdoso(Idoso *idoso) {
-    printf("Destruindo idoso: %s\n", idoso->nome);
     // Destrói a lista de amigos e cuidadores, sem destruir os elementos
     destruirLista(idoso->amigos, 0);
     destruirLista(idoso->cuidadores, 0);
