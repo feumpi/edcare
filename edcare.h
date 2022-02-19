@@ -10,7 +10,7 @@
 typedef struct edcare EDCare;
 
 // Inicializa uma instância do EDCare e cria as listas necessárias
-EDCare* inicializarEDCare();
+EDCare* inicializarEDCare(int caso);
 
 // Carrega o arquivo, inicializa todos os idosos e os adiciona nas listas
 void carregarIdosos(EDCare* edcare);

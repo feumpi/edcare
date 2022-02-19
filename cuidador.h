@@ -10,7 +10,7 @@
 typedef struct cuidador Cuidador;
 
 // Inicializa um cuidador com o nome correspondente e abre o arquivo de leituras
-Cuidador* inicializarCuidador(char* nome);
+Cuidador* inicializarCuidador(char* nome, int casoTeste);
 
 // Retorna o nome do cuidador
 char* nomeCuidador(Cuidador* cuidador);

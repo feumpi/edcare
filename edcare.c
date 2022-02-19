@@ -1,6 +1,7 @@
 #include "edcare.h"
 
 struct edcare {
+    int casoTeste;
     Lista *idosos;
     Lista *cuidadores;
     int leituraAtual;
@@ -10,8 +11,10 @@ struct edcare {
     int acabou;
 };
 
-EDCare *inicializarEDCare() {
+EDCare *inicializarEDCare(int casoTeste) {
     EDCare *edcare = malloc(sizeof(EDCare));
+
+    edcare->casoTeste = casoTeste;
 
     edcare->idosos = inicializarLista(LISTA_IDOSOS);
     edcare->cuidadores = inicializarLista(LISTA_CUIDADORES);
@@ -26,7 +29,10 @@ EDCare *inicializarEDCare() {
 
 void carregarIdosos(EDCare *edcare) {
     // Abrir arquivo
-    FILE *arq_apoio = fopen("in/apoio.txt", "r");
+
+    char caminho[50];
+    sprintf(caminho, "in/%d/apoio.txt", edcare->casoTeste);
+    FILE *arq_apoio = fopen(caminho, "r");
 
     char linha[100];
 
@@ -37,7 +43,7 @@ void carregarIdosos(EDCare *edcare) {
             // Enquanto encontrar nomes, cria idosos e adiciona na lista
             char *nomeAtual = strtok(linha, " ;\n");
             while (nomeAtual != NULL) {
-                Idoso *idoso = inicializarIdoso(nomeAtual);
+                Idoso *idoso = inicializarIdoso(nomeAtual, edcare->casoTeste);
                 inserirFim(edcare->idosos, idoso);
                 edcare->quantidadeIdosos++;
                 nomeAtual = strtok(NULL, " ;\n");
@@ -80,7 +86,9 @@ void carregarIdosos(EDCare *edcare) {
 
 void carregarCuidadores(EDCare *edcare) {
     // Abrir arquivos
-    FILE *arq_cuidadores = fopen("in/cuidadores.txt", "r");
+    char caminho[50];
+    sprintf(caminho, "in/%d/cuidadores.txt", edcare->casoTeste);
+    FILE *arq_cuidadores = fopen(caminho, "r");
 
     char linha[100];
 
@@ -91,7 +99,7 @@ void carregarCuidadores(EDCare *edcare) {
             // Enquanto encontrar nomes, cria cuidadores e adiciona na lista
             char *nomeAtual = strtok(linha, " ;\n");
             while (nomeAtual != NULL) {
-                Cuidador *cuidador = inicializarCuidador(nomeAtual);
+                Cuidador *cuidador = inicializarCuidador(nomeAtual, edcare->casoTeste);
                 // printf("cuidador criado: '%s'\n", nomeCuidador(cuidador));
                 if (cuidador) {
                     inserirFim(edcare->cuidadores, cuidador);

@@ -12,7 +12,7 @@
 typedef struct idoso Idoso;
 
 // Inicializa um idoso com o nome correspondente, cria as listas necessárias e abre o arquivo de leituras
-Idoso* inicializarIdoso(char* nome);
+Idoso* inicializarIdoso(char* nome, int casoTeste);
 
 // Retorna o nome do idoso
 char* nomeIdoso(Idoso* idoso);

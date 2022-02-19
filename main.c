@@ -16,10 +16,15 @@
 //     TODO: documentar o trabalho corretamente, criar diagramas
 //     TODO: fazer um makefile
 
-int main() {
-    printf("EDCare\n\n");
+int main(int argc, char* argv[]) {
+    if (argc <= 1) {
+        printf("Informe o número do caso de teste a ser usado.\nEx: %s 1\n", argv[0]);
+        exit(-1);
+    }
 
-    EDCare *edcare = inicializarEDCare();
+    int casoTeste = atoi(argv[1]);
+
+    EDCare* edcare = inicializarEDCare(casoTeste);
 
     carregarIdosos(edcare);
     carregarCuidadores(edcare);

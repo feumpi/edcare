@@ -7,13 +7,13 @@ struct cuidador {
 };
 
 Cuidador *
-inicializarCuidador(char *nome) {
+inicializarCuidador(char *nome, int casoTeste) {
     Cuidador *cuidador = malloc(sizeof(Cuidador));
 
     cuidador->nome = strdup(nome);
 
     char caminho[50];
-    sprintf(caminho, "in/%s.txt", cuidador->nome);
+    sprintf(caminho, "in/%d/%s.txt", casoTeste, cuidador->nome);
     cuidador->leituras = fopen(caminho, "r");
 
     cuidador->leituraAtual = -1;

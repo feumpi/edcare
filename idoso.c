@@ -17,7 +17,7 @@ struct idoso {
 };
 
 Idoso *
-inicializarIdoso(char *nome) {
+inicializarIdoso(char *nome, int casoTeste) {
     Idoso *idoso = malloc(sizeof(Idoso));
 
     idoso->nome = strdup(nome);
@@ -26,8 +26,8 @@ inicializarIdoso(char *nome) {
     idoso->historico = inicializarLista(LISTA_LEITURAS);
 
     char caminhoEntrada[50], caminhoSaida[50];
-    sprintf(caminhoEntrada, "in/%s.txt", idoso->nome);
-    sprintf(caminhoSaida, "out/%s-saida.txt", idoso->nome);
+    sprintf(caminhoEntrada, "in/%d/%s.txt", casoTeste, idoso->nome);
+    sprintf(caminhoSaida, "out/%d/%s-saida.txt", casoTeste, idoso->nome);
 
     FILE *arqEntrada = fopen(caminhoEntrada, "r");
 
