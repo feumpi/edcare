@@ -10,31 +10,35 @@
 
 # Documentação do trabalho
 
-## Introdução
+# Introdução
 
 O programa implementa um sistema de rede de apoio para idosos formada por amigos (outros idosos) e também cuidadores. Os idosos usam sensores que monitoram sua posição, temperatura, se houve queda e se houve falecimento. Os cuidadores usam um outro tipo de sensor que monitora apenas sua posição. O sistema registra uma quantidade indefinida de idosos e cuidadores, nem todos relacionados.
 
 Cada idoso possui sua própria rede de apoio, ou seja, determinados amigos e determinados cuidadores do sistema que podem lhe prover assistência quando necessário, e o papel do programa é determinar, após ler os dados de todos os sensores necessários, se o idoso precisa de uma assistência básica, oferecida pelo amigo que estiver mais próximo, ou de cuidados mais específicos, oferecidos pelo cuidador que estiver mais próximo.
 
-## Implementação
+## Como executar o programa
 
-### TADs implementados
+## Condições de teste
 
-Usamos um TAD `Idoso` para guardar as informações sobre cada idoso, inlcuindo seu nome, sua lista de amigos, sua lista de cuidadores, sua lista de leituras dos sensores, seus próprios arquivos de entrada e saída e outras propriedades relavantes para o funcionamento do programa.
+# Implementação
 
-O TAD `Cuidador` guarda informações sobre cada cuidador do sistema, como seu nome, sua posição e seus próprios arquivos de entrada e saída, além de outras propriedades relevantes.
+## TADs implementados
 
-O TAD `Leitura` guarda informações sobre a leitura de um idoso: se houve falecimento, se houve queda, temperatura e posição (em latitude e longitude).
+- Usamos um TAD `Idoso` para guardar as informações sobre cada idoso, inlcuindo seu nome, sua lista de amigos, sua lista de cuidadores, sua lista de leituras dos sensores, seus próprios arquivos de entrada e saída e outras propriedades relavantes para o funcionamento do programa.
 
-No TAD `Lista`, implementamos uma lista encadeada genérica que pode ser inicializada com os tipos `LISTA_IDOSOS`, `LISTA_CUIDADORES` ou `LISTA_LEITURAS` para guardar um conjunto dos TADs anteriores.
+- O TAD `Cuidador` guarda informações sobre cada cuidador do sistema, como seu nome, sua posição e seus próprios arquivos de entrada e saída, além de outras propriedades relevantes.
 
-Por fim, o TAD `EDCare` se trata de uma instância do próprio sistema, guardando todos os idosos e cuidadores do sistema e outras propriedades relevantes.
+- O TAD `Leitura` guarda informações sobre a leitura de um idoso: se houve falecimento, se houve queda, temperatura e posição (em latitude e longitude).
 
-{ diagrama do programa }
+- No TAD `Lista`, implementamos uma lista encadeada genérica que pode ser inicializada com os tipos `LISTA_IDOSOS`, `LISTA_CUIDADORES` ou `LISTA_LEITURAS` para guardar um conjunto dos TADs anteriores.
 
-### Funcionamento
+- Por fim, o TAD `EDCare` se trata de uma instância do próprio sistema, guardando todos os idosos e cuidadores do sistema e outras propriedades relevantes.
 
-#### Fluxo principal
+![EDCare](./diagramas/edcare.png)
+
+## Funcionamento
+
+### Fluxo principal
 
 No fluxo principal do programa, inicializamos uma instância de `EDCare`, e usamos as funções `EDCare::carregarIdosos` e `EDCare::carregarCuidadores` para ler os arquivos de entrada, criar os objetos `Idoso` e `Cuidador` necessário e criar as relações de toda a rede de apoio.
 
@@ -42,11 +46,11 @@ Em seguida, a função `EDCare::realizarLeituras` é responsável por ler, seque
 
 Por fim, `EDCare::destruirEDCare` é responsável por liberar toda a memória dinâmica alocada para o programa, incluindo listas e seus elementos.
 
-{ diagrama main }
+![main](./diagramas/main.png)
 
 ---
 
-#### EDCare::carregarIdosos
+### EDCare::carregarIdosos
 
 Para carregar os idosos e suas redes de apoio, identificamos o caminho e abrimos o arquivo `apoio.txt` da entrada, iterando linha a linha.
 
@@ -58,11 +62,11 @@ Com mais um `strtok` sequencial, obtemos o nome de um amigo, encontramos seu pon
 
 Sempre que um idoso é adicionado como amigo, usamos `Idoso::incrementarAmigos` para atualizar a quantidade de amigos, necessária para loops futuros.
 
-{ diagrama carregarIdosos }
+![carregarIdosos](./diagramas/carregarIdosos.png)
 
 ---
 
-#### EDCare::carregarCuidadores
+### EDCare::carregarCuidadores
 
 De forma muito parecida com a função anterior, iteramos o arquivo `cuidadores.txt` para, ainda na primeira linha, identificar todos os nomes de cuidadores e inicializar um objeto `Cuidador` para cada um, adicionando-os **no início** lista `EDCare::cuidadores` e incrementando `EDCare::quantidadeCuidadores`.
 
@@ -74,11 +78,11 @@ Novamente, usamos `Idoso::incrementarCuidadores` para atualizar o tamanho da lis
 
 Agora, temos as listas `EDCare::idosos` e `EDCare::cuidadores` contendo ponteiros para todos os idosos e cuidadores do sistema, enquanto cada idoso possui uma lista `Idoso::amigos` e `Idoso::cuidadores` apontando para os amigos e cuidadores que podem lhe prover assistência.
 
-{diagrama carregarCuidadores}
+![carregarCuidadores](./diagramas/carregarCuidadores.png)
 
 ---
 
-#### EDCare::realizarLeituras
+### EDCare::realizarLeituras
 
 Aqui, fazemos um loop de `0` até `EDCare::quantidadeLeituras` para processar uma a uma todas as leituras disponíveis na entrada.
 
@@ -90,11 +94,11 @@ Do contrário, obtemos sua leitura mais recente por meio de `Idoso::leituraIdoso
 
 As saídas correspondentes ao caso tratado são impressas na saída usando `Idoso::imprimirSaida`.
 
-{ diagrama realizarLeituras }
+![realizarLeituras](./diagramas/realizarLeituras.png)
 
 ---
 
-#### Idoso::leituraIdoso
+### Idoso::leituraIdoso
 
 Para retornar a leitura atual do idoso, primeiro verificamos se ele já foi lido na "rodada" atual. Se a propriedade interna `Idoso::leituraAtual` for menor que o `indice` informado na função, lemos a próxima linha do arquivo de entrada do idoso.
 
@@ -102,44 +106,46 @@ Se não for possível extrair os dados de queda, temperatura, latitude e longitu
 
 Por fim, tendo criado ou não uma nova `Leitura`, retornamos a leitura mais recente de `Idoso::historico`, encontrada no índice 0 por `Lista::listaN`.
 
-{ diagrama leituraIdoso }
+![leituraIdoso](./diagramas/leituraIdoso.png)
 
 ---
 
-#### Idoso::amigoMaisProximo
+### Idoso::amigoMaisProximo
 
 Para determinar o amigo mais próximo, iteramos a lista `Idoso::amigos` (ignorando os amigos registrados com falecidos),obtemos a posição de cada um por `Idoso::posicaoIdoso`, calculamos a distância entre as coordenadas do idoso e do amigo usando `Idoso::calcularDistancia`.
 
 Determinamos o índice da lista de menor distância calculada, este então retornado por `Lista::listaN`.
 
-{ diagrama amigoMaisProximo }
+![amigoMaisProximo](./diagramas/amigoMaisProximo.png)
 
 ---
 
-#### Idoso::cuidadorMaisProximo
+### Idoso::cuidadorMaisProximo
 
 Da mesma forma, para determinar o cuidador mais próximo, iteramos a lista `Idoso::cuidadores` e determinamos a posição de cada com `Cuidador::posicaoCuidador`.
 
-O cuidador no índice de menor distancia obtido por `Idoso::calcularDistancia` é retornado ao ser encontrado por `Lista::listaN`.
+O cuidador no índice de menor distancia obtida por `Idoso::calcularDistancia` é retornado ao ser encontrado por `Lista::listaN`.
 
-{ diagrama cuidadorMaisProximo }
-
----
-
-#### Idoso::posicaoIdoso
-
-{ diagrama posicaoIdoso }
+![cuidadorMaisProximo](./diagramas/cuidadorMaisProximo.png)
 
 ---
 
-#### Idoso::calcularDistancia
+### Idoso::posicaoIdoso
 
-{ diagrama calcularDistancia }
+Para determinar a posição do idoso, verificamos se ela ainda precisa ser atualizada na rodada atual (leituraAtual < indice), e forçamos uma nova leitura com `Idoso::leituraIdoso`, se necessário.
+
+Depois, os valores de `Idoso::latitude` e `Idoso::longitude` são armanzenados nos ponteiros fornecidos para a função.
+
+![posicaoIdoso](./diagramas/posicaoIdoso.png)
 
 ---
 
-#### Cuidador::posicaoCuidador
+### Cuidador::posicaoCuidador
 
-{ diagrama posicaoCuidador }
+Para determinar a posição do cuidador, precisamos ler linhas até que `Cuidador::leituraAtual` seja igual ao índice fornecido para a função.
 
-## Conclusão
+Ao obter a linha correta da rodada atual, extraimos os dados de posição e armazenamos em `Cuidador::latitude` e `Cuidador::longitude`, cujos valores são também armazenados nos ponteiros fornecidos para a função.
+
+![posicaoCuidador](./diagramas/posicaoCuidador.png)
+
+# Conclusão
