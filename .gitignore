@@ -2,3 +2,4 @@ main
 .vscode/*
 in/*
 out/*
+*.o

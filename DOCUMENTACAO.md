@@ -16,9 +16,84 @@ O programa implementa um sistema de rede de apoio para idosos formada por amigos
 
 Cada idoso possui sua própria rede de apoio, ou seja, determinados amigos e determinados cuidadores do sistema que podem lhe prover assistência quando necessário, e o papel do programa é determinar, após ler os dados de todos os sensores necessários, se o idoso precisa de uma assistência básica, oferecida pelo amigo que estiver mais próximo, ou de cuidados mais específicos, oferecidos pelo cuidador que estiver mais próximo.
 
-## Como executar o programa
+## Como usar o programa
+
+Posicione os arquivos de entrada do caso de teste na pasta `/in/<N>/`, sendo `<N>` o número do caso de teste.
+Exemplo:
+
+```
+/in/1/apoio.txt
+/in/1/cuidadores.txt
+/in/1/cuidador1.txt
+(...)
+
+/in/2/apoio.txt
+/in/2/cuidadores.txt
+/in/2/c1.txt
+(...)
+```
+
+As entradas dos casos 1 e 2, disponibilizadas no classroom, já estão posicionados nas pastas adequadas.
+
+Os arquivos de saída de cada caso serão gerados na pasta `/out/<N>/`, sendo `<N>` o número do caso de teste. É importante que a pasta de cada caso seja criada em branco, pois o programa **não cria diretórios**. Ex:
+
+```bash
+/> cd out
+/out> mkdir 1
+/out> mkdir 2
+/out> mkdir 3
+```
+
+_Caso os arquivos que o programa gera já existam, eles serão sobrescritos._
+
+Compile usando o _Makefile_
+
+```bash
+> make
+
+gcc -c cuidador.c
+gcc -c edcare.c
+gcc -c idoso.c
+gcc -c leitura.c
+gcc -c lista.c
+gcc -c main.c
+gcc cuidador.o edcare.o idoso.o leitura.o lista.o main.o -o main -lm
+```
+
+_Ou execute os comandos de compilação acima manualmente._
+
+Para executar o programa, informe o número do caso de teste a ser rodado. Ex:
+
+```bash
+> ./main 1
+```
+
+Exemplo de output esperado no terminal:
+
+```bash
+Executando caso de teste 1
+8 idosos carregados: Luis Eduardo sicrano fulano Alice Pedro Maria Joao
+4 cuidadores carregados: Cuidador4 Cuidador3 Cuidador2 Cuidador1
+
+O caso de teste possui 5 leituras
+Rodando leitura 1...
+Rodando leitura 2...
+Rodando leitura 3...
+Rodando leitura 4...
+Rodando leitura 5...
+```
+
+Para limpar os arquivos objeto \*.o e o executável gerados:
+
+```bash
+make clean
+```
 
 ## Condições de teste
+
+O programa foi testado e funcionou como esperado em em ambiente `Ubuntu 20.04` / `Linux 5.10.16.3-microsoft-standard-WSL2` (virtualizado em WSL2) e compilado com `gcc 9.3.0`.
+
+---
 
 # Implementação
 
@@ -36,7 +111,11 @@ Cada idoso possui sua própria rede de apoio, ou seja, determinados amigos e det
 
 ![EDCare](./diagramas/edcare.png)
 
+---
+
 ## Funcionamento
+
+---
 
 ### Fluxo principal
 
@@ -148,4 +227,34 @@ Ao obter a linha correta da rodada atual, extraimos os dados de posição e arma
 
 ![posicaoCuidador](./diagramas/posicaoCuidador.png)
 
+---
+
 # Conclusão
+
+Foi muito interessante implementar os TADs com tipos opacos e notar a semelhança com o paradigma de orientação a objeto usando classes no C++, inclusive na necessidade de usar funções `getters` e `setters` para alterar propriedades dos structs que não são visíveis no cabeçalho `*.h`. Essa foi, a próposito, a maior dificuldade no início do trabalho, quando a princípio não entendi os erros de compilação com relação a tentar acessar propriedades desses tipos opacos diretamente.
+
+Novamente por estar pensando um pouco em C++, tive a sensação de criar complexidades desnecessárias em alguns momentos, como ao implementar TADs `Idoso` e `Cuidador` em vez de usar listas de strings com seus nomes (e sem pensar a princípio nas consequências de fazer isso sem algumas facilidades que o C++ proporcionaria), mas foi uma experiência boa ter uma pequena noção de como o C++ funciona como um superset de C "por baixo dos panos".
+
+---
+
+O uso do debugger foi fundamental pra identificar alguns erros estranhos, como a inclusão do `\n` e de espaços em strings ao extrair nomes de idosos/cuidadores dos arquivos, contornados adicionando ambos os caracteres à lista de delimitadores do `strtok` que foi utilizado.
+
+---
+
+Na ideia de implementação inicial, eu havia pensado em implementar um TAD `Fila` para guardar as leituras de cada `Idoso`, lendo os arquivos de entrada inteiros de uma só vez, e então "chamar a próxima" leitura de cada idoso em cada rodada do programa, mas optei por usar uma `Lista` convencional para me adequar melhor ao enunciado, lendo apeanas uma linha dos arquivos de entrada por rodada.
+
+---
+
+No caso de teste 2 que foi fornecido, alguns amigos e cuidadores tem exatamente a mesma posição, e nesse caso o programa seleciona como mais próximo o primeiro da lista. Na minha implementação original, as inserções de cuidadores e idosos eram sempre feitas ao final da lista, mas alterei para inserções no início para atender às saídas do caso de teste nessa situação.
+
+---
+
+As maiores dificuldades de implementação foram
+
+# Bibliografia
+
+- CELES, W; CERQUEIRA, R; RANGEL NETTO, JM. Introdução a estruturas de dados: com técnicas de programação em C. Rio de Janeiro: Campus, 2004., 2004. (Série Editora Campus/SBC).
+- C Reference - cppreference.c - Disponível em <https://en.cppreference.com/w/c>. Acesso em fevereiro/2022.
+- C Language Reference - Microsoft Docs - Disponível em <https://docs.microsoft.com/en-us/cpp/c-language/c-language-reference>. Acesso em fevereiro/2022.
+- Geeks for Geeks - Disponível em <https://www.geeksforgeeks.org/>. Acesso em fevereiro/2022.
+- tutorialspoint - Disponível em <https://www.tutorialspoint.com/>. Acesso em fevereiro/2022.

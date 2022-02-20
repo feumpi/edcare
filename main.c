@@ -1,7 +1,31 @@
+/*
+### Universidade Federal do Espírito Santo
+
+### INF09292 - Estrutura de Dados I - 2021/2
+
+### Primeiro trabalho
+
+### Aluno: 2020205193 Felipe Pereira Umpierre
+
+### Professora: Patricia Dockhorn Costa
+
+Documentação e instruções de uso em DOCUMENTACAO.md ou DOCUMENTACAO.pdf
+Posicione arquivos de entrada em /in/<N>, sendo <N> o número do caso de teste.
+Ex: /in/1
+    /in/2
+
+Os arquivos de saída serão gerados em /out/<N>/, sendo <N> o número  do caso de teste
+Atenção: A pasta <N> precisa existir, pois o programa não cria diretórios
+
+Para compilar, use o comando "make"
+Execute o arquivo ./main informado o número do caso de teste desejável, de acordo com a pasta de entradas.
+Ex: ./main 1
+    ./main 2
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "cuidador.h"
 #include "edcare.h"
 #include "idoso.h"
@@ -10,10 +34,6 @@
 
 #define IDOSOS 0
 #define CUIDADORES 1
-
-// TODO: mudar a inserção nas listas para o começo, de modo a igualar os casos teste
-//   TODO: documentar o trabalho corretamente, criar diagramas
-//   TODO: fazer um makefile
 
 int main(int argc, char* argv[]) {
     // Encerra se o número do caso de teste não for informado na execução
