@@ -249,8 +249,6 @@ No caso de teste 2 que foi fornecido, alguns amigos e cuidadores tem exatamente 
 
 ---
 
-As maiores dificuldades de implementação foram
-
 # Bibliografia
 
 - CELES, W; CERQUEIRA, R; RANGEL NETTO, JM. Introdução a estruturas de dados: com técnicas de programação em C. Rio de Janeiro: Campus, 2004., 2004. (Série Editora Campus/SBC).
