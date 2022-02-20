@@ -11,8 +11,9 @@
 #define IDOSOS 0
 #define CUIDADORES 1
 
-//  TODO: documentar o trabalho corretamente, criar diagramas
-//  TODO: fazer um makefile
+// TODO: mudar a inserção nas listas para o começo, de modo a igualar os casos teste
+//   TODO: documentar o trabalho corretamente, criar diagramas
+//   TODO: fazer um makefile
 
 int main(int argc, char* argv[]) {
     // Encerra se o número do caso de teste não for informado na execução
