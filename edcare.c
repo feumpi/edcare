@@ -205,8 +205,6 @@ void realizarLeituras(EDCare *edcare) {
             }
             // se febre alta, resetar febreBaixa e acionar cuidador mais próximo
             else if (leituraTemperatura(leitura) >= 38) {
-                resetarFebreBaixa(idoso);
-
                 sprintf(saida, "febre alta, acionou %s", nomeCuidador(cuidadorMaisProximo(idoso, leituraLatitude(leitura), leituraLongitude(leitura))));
                 imprimirSaida(idoso, saida);
 
@@ -217,6 +215,8 @@ void realizarLeituras(EDCare *edcare) {
 
                 // se a febre baixa já ocorreu 4 ou mais vezes, cuidador mais próximo
                 if (febreBaixa(idoso) >= 4) {
+                    resetarFebreBaixa(idoso);
+
                     sprintf(saida, "febre baixa pela quarta vez, acionou %s", nomeCuidador(cuidadorMaisProximo(idoso, leituraLatitude(leitura), leituraLongitude(leitura))));
                     imprimirSaida(idoso, saida);
                 }
