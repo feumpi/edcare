@@ -59,9 +59,17 @@ void incrementarAmigos(Idoso *idoso) {
     idoso->quantidadeAmigos++;
 }
 
+float calcularDistancia(int lat1, int long1, int lat2, int long2) {
+    int distY = abs(lat1 - lat2);
+    int distX = abs(long1 - long2);
+    // A raiz da soma dos quadrados das distâncias X e Y
+    return sqrt(pow(distX, 2) + pow(distY, 2));
+}
+
 Idoso *amigoMaisProximo(Idoso *idoso, int latitude, int longitude) {
     // Valores precisam ser inicializados para evitar um erro no valgrind
-    int distancia = 999, menorDistancia = 999, indiceMenor = 0;
+    double distancia = 999, menorDistancia = 999;
+    int indiceMenor = -1;
 
     for (int i = 0; i < idoso->quantidadeAmigos; i++) {
         Idoso *amigo = listaN(idoso->amigos, i);
@@ -70,12 +78,10 @@ Idoso *amigoMaisProximo(Idoso *idoso, int latitude, int longitude) {
         if (idosoFaleceu(amigo))
             continue;
 
-        int distY = latitude - minhaLatitude(amigo);
-        int distX = longitude - minhaLongitude(amigo);
+        distancia = calcularDistancia(latitude, longitude, minhaLatitude(amigo), minhaLongitude(amigo));
 
-        distancia = sqrt(pow(distX, 2) + pow(distY, 2));
-
-        if (i == 0 || distancia < menorDistancia) {
+        // Se um indiceMenor ainda não foi encontrado, ou a distancia atual for menor
+        if (indiceMenor == -1 || distancia < menorDistancia) {
             menorDistancia = distancia;
             indiceMenor = i;
         }
@@ -89,21 +95,19 @@ Lista *meusCuidadores(Idoso *idoso) {
 }
 
 Cuidador *cuidadorMaisProximo(Idoso *idoso, int latitude, int longitude) {
-    int distancia, menorDistancia, indiceMenor = 0;
+    double distancia = 999, menorDistancia = 999;
+    int indiceMenor = -1;
 
     for (int i = 0; i < idoso->quantidadeCuidadores; i++) {
         Cuidador *cuidador = listaN(idoso->cuidadores, i);
 
-        // Inicializando valores para corrigir um erro do valgrind
+        // Obtém a posição do cuidador; Inicializando valores para corrigir um erro do valgrind
         int latCuidador = 0, longCuidador = 0;
-
         posicaoCuidador(cuidador, idoso->leituraAtual, &latCuidador, &longCuidador);
-        int distY = latitude - latCuidador;
-        int distX = longitude - longCuidador;
 
-        distancia = sqrt(pow(distX, 2) + pow(distY, 2));
+        distancia = calcularDistancia(latitude, longitude, latCuidador, longCuidador);
 
-        if (i == 0 || distancia < menorDistancia) {
+        if (indiceMenor == -1 || distancia < menorDistancia) {
             menorDistancia = distancia;
             indiceMenor = i;
         }

@@ -4,6 +4,8 @@ struct cuidador {
     char *nome;
     FILE *leituras;
     int leituraAtual;
+    int latitude;
+    int longitude;
 };
 
 Cuidador *
@@ -18,6 +20,8 @@ inicializarCuidador(char *nome, int casoTeste) {
     cuidador->leituras = fopen(caminho, "r");
 
     cuidador->leituraAtual = -1;
+    cuidador->latitude = -1;
+    cuidador->longitude = -1;
 
     return cuidador;
 }
@@ -32,17 +36,23 @@ FILE *leiturasCuidador(Cuidador *cuidador) {
 
 void posicaoCuidador(Cuidador *cuidador, int indice, int *latitude, int *longitude) {
     char linha[100];
-    int lido = 0;
 
-    // Como nem todo cuidador é lido em toda "rodada", é preciso descartar as leituras de índices anteriores
-    while (cuidador->leituraAtual < indice) {
-        // Se o fgets retorna um ponteiro != NULL e o indice desejado foi atingido, sinaliza que os valores podem ser lidos
-        if (fgets(linha, 100, cuidador->leituras) && cuidador->leituraAtual == indice) lido = 1;
-        cuidador->leituraAtual++;
+    // Se a posição atual estiver desatualizada
+    if (cuidador->leituraAtual <= indice) {
+        // Como nem todo cuidador é lido em toda "rodada", é preciso descartar as leituras de índices anteriores
+        while (cuidador->leituraAtual < indice) {
+            // Se o fgets retorna um ponteiro != NULL e o indice desejado foi atingido, sinaliza que os valores podem ser lidos
+            fgets(linha, 100, cuidador->leituras);
+            cuidador->leituraAtual++;
+        }
+
+        // Atualiza a latitude e longitude internamente
+        sscanf(linha, "%d;%d", &cuidador->latitude, &cuidador->longitude);
     }
 
-    // Lê da string a latitude e longitude, apenas se sinalizado anteriormente (corrige erro do valgrind)
-    if (lido) sscanf(linha, "%d;%d", latitude, longitude);
+    // Guarda a posição nos ponteiros informados
+    *latitude = cuidador->latitude;
+    *longitude = cuidador->longitude;
 }
 
 void imprimirCuidador(Cuidador *cuidador) {

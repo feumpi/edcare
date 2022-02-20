@@ -27,3 +27,21 @@ O programa implementa um TAD `Lista`, que é uma lista encadeada genérica (usan
 No TAD `Idoso`, inicializamos e guardamos um `char *nome`, bem como uma `Lista *amigos` (outros idosos da rede de apoio pessoal) e uma `Lista *cuidadores` (cuidadores responsáveis pelo idoso). Em `FILE *leituras`, temos o endereço do arquivo com o próprio nome, contendo as leituras do sensor do idoso, e em `FILE *saida` o arquivo onde as saídas sobre o idoso devem ser impressas.
 
 No TAD `Cuidador`, inicializamos e guardamos um `char* nome`, um `FILE* leituras` apontando para o arquivo das próprias leituras, da mesma forma.
+
+dificuldades encontradas:
+
+- para evitar duplicar bastante código implementando listas diferentes para cada TAD, busquei como implementar uma lista "genérica", que não é exatamente heterogênea - pois é esperado que os elementos sejam sempre iguais - mas se trata de um único tad Lista que pode ser inicializado como uma lista de idosos, de cuidadores ou de leituras, com uma propriedade `Lista::tipo` e não `Celula::tipo` para identificá-la, e usando o ponteiro `void *`.
+
+- usando tipos opacos, com a definição dos structs acontecendo no arquivo .c, foi necessário definir funções "getters" e "setters" que me lembraram bastante o modelo de orientação a objeto em C++, especialmente ao implementar os tads `Idoso`, `Cuidador` e `Leitura` com acesso frequente de informações
+
+- como nem todos os cuidadores acionados são lidos em cada leitura dos batches, ler a próxima linha para encontrar a posição era inconsistente, então foi preciso pensar numa forma de descartar as linhas referentes a leituras anteriores;
+
+- de forma parecida, a posição de um cuidador pode ser requisitada por mais de um idoso a cada leitura, e nesse caso não é desejável ler a próxima linha, e sim obter a posição atual. pra isso, a posição, uma vez lida, é guardada em `Cuidador::longitude` e `Cuidador::latitude`, e `Cuidador::leituraAtual` identifica se ela está atualizada.
+
+- foi preciso tratar o caso de, na leitura de um idoso A, que precisa acionar um amigo B, ainda não ter disponivel a posição atualizada de B, por não ter sido lido ainda. pra determinar se a posição está atualizada, usa-se `Idoso::leituraAtual`
+
+### diferenças nos casos de teste documentadas
+
+- quando dois cuidadores tiverem a mesma posição, o considerado "mais próximo" será o primeiro da lista, por exemplo c1 e não o c3, diferente do que ocorre em algumas leituras do caso de teste 2:
+  - linhas 7, 10, 12 e 15 (c1 / c3)
+  - linhas 2 e 12 (c7 / c9)

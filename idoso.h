@@ -23,6 +23,9 @@ Lista* meusAmigos(Idoso* idoso);
 // Incrementa a quantidade de amigos do idoso
 void incrementarAmigos(Idoso* idoso);
 
+// Retorna a distância entre duas coordenadas
+float calcularDistancia(int lat1, int long1, int lat2, int long2);
+
 // Retorna o amigo mais próximo da posição informada
 Idoso* amigoMaisProximo(Idoso* idoso, int latitude, int longitude);
 
