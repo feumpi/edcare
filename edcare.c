@@ -43,7 +43,7 @@ void carregarIdosos(EDCare *edcare) {
             char *nomeAtual = strtok(linha, " ;\n");
             while (nomeAtual != NULL) {
                 Idoso *idoso = inicializarIdoso(nomeAtual, edcare->casoTeste);
-                inserirFim(edcare->idosos, idoso);
+                inserirInicio(edcare->idosos, idoso);
                 edcare->quantidadeIdosos++;
                 nomeAtual = strtok(NULL, " ;\n");
             }
@@ -68,11 +68,11 @@ void carregarIdosos(EDCare *edcare) {
 
                 // insere o idoso na lista de amigos, se encontrado
                 if (amigo) {
-                    inserirFim(meusAmigos(idosoAtual), amigo);
+                    inserirInicio(meusAmigos(idosoAtual), amigo);
                     incrementarAmigos(idosoAtual);
 
                     // também insere o idoso atual na lista do amigo
-                    inserirFim(meusAmigos(amigo), idosoAtual);
+                    inserirInicio(meusAmigos(amigo), idosoAtual);
                     incrementarAmigos(amigo);
                 }
 
@@ -105,7 +105,7 @@ void carregarCuidadores(EDCare *edcare) {
                 Cuidador *cuidador = inicializarCuidador(nomeAtual, edcare->casoTeste);
 
                 if (cuidador) {
-                    inserirFim(edcare->cuidadores, cuidador);
+                    inserirInicio(edcare->cuidadores, cuidador);
                     edcare->quantidadeCuidadores++;
 
                     // Após carregar o primeiro cuidador, determinar a quantidade de leituras totais do caso
@@ -154,7 +154,7 @@ void carregarCuidadores(EDCare *edcare) {
                 // printf("cuidador: '%s'\n\n", nomeCuidador(cuidador));
 
                 if (cuidador) {
-                    inserirFim(meusCuidadores(idosoAtual), cuidador);
+                    inserirInicio(meusCuidadores(idosoAtual), cuidador);
                     incrementarCuidadores(idosoAtual);
                 }
 
