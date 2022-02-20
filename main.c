@@ -12,7 +12,7 @@
 #define CUIDADORES 1
 
 // TODO: um idoso pode precisar determinar a posição de um amigo antes dele ser lido; nesse caso, forçar a leitura (e salvamento dela) no Idoso, mas guardar um idoso->leituraAtual e comparar com edcare->leituraAtual para evitar ler em duplicidade
-//  FIXME: verificar casos de teste 2 escolhendo amigo/cuidador incorreto (mas considerar falecimento) - rever cálculo da distancia em amigoMaisProximo() e cuidadorMaisProximo()
+// TODO: refatorar a leitura do idoso
 //  TODO: documentar o trabalho corretamente, criar diagramas
 //  TODO: fazer um makefile
 

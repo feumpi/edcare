@@ -47,6 +47,9 @@ void carregarIdosos(EDCare *edcare) {
                 edcare->quantidadeIdosos++;
                 nomeAtual = strtok(NULL, " ;\n");
             }
+
+            printf("%d idosos carregados: ", edcare->quantidadeIdosos);
+            imprimirLista(edcare->idosos);
         }
         // próximas linhas: carregar amigos
         else {
@@ -128,6 +131,10 @@ void carregarCuidadores(EDCare *edcare) {
 
                 nomeAtual = strtok(NULL, " ;\n");
             }
+
+            printf("%d cuidadores carregados: ", edcare->quantidadeCuidadores);
+            imprimirLista(edcare->cuidadores);
+
         }
         // próximas linhas: adicionar cuidadores aos idosos
         else {
@@ -162,8 +169,13 @@ void carregarCuidadores(EDCare *edcare) {
 }
 
 void realizarLeituras(EDCare *edcare) {
+    printf("\nO caso de teste possui %d leituras\n", edcare->quantidadeLeituras);
+
+    // Para cada leitura do caso
     while (edcare->leituraAtual < edcare->quantidadeLeituras - 1) {
         edcare->leituraAtual++;
+
+        printf("Rodando leitura %d...\n", edcare->leituraAtual + 1);
 
         // Para cada idoso da lista
         for (int i = 0; i < edcare->quantidadeIdosos; i++) {

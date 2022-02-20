@@ -56,7 +56,7 @@ void posicaoCuidador(Cuidador *cuidador, int indice, int *latitude, int *longitu
 }
 
 void imprimirCuidador(Cuidador *cuidador) {
-    printf("Cuidador: %s\n", cuidador->nome);
+    printf("%s ", cuidador->nome);
 }
 
 void destruirCuidador(Cuidador *cuidador) {

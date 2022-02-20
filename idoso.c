@@ -177,7 +177,7 @@ void registrarFalecimento(Idoso *idoso) {
 }
 
 void imprimirIdoso(Idoso *idoso) {
-    printf("Idoso: %s\n", idoso->nome);
+    printf("%s ", idoso->nome);
 }
 
 void destruirIdoso(Idoso *idoso) {

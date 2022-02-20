@@ -50,7 +50,6 @@ void *listaN(Lista *lista, int n) {
 }
 
 void imprimirLista(Lista *lista) {
-    printf("----------\n");
     for (Celula *celula = lista->prim; celula != NULL; celula = celula->prox) {
         if (lista->tipo == LISTA_IDOSOS) {
             imprimirIdoso(celula->cont);
@@ -60,7 +59,7 @@ void imprimirLista(Lista *lista) {
             imprimirCuidador(celula->cont);
         }
     }
-    printf("----------\n\n");
+    printf("\n");
 }
 
 void inserirInicio(Lista *lista, void *cont) {
