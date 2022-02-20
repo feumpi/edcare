@@ -78,7 +78,9 @@ Idoso *amigoMaisProximo(Idoso *idoso, int latitude, int longitude) {
         if (idosoFaleceu(amigo))
             continue;
 
-        distancia = calcularDistancia(latitude, longitude, minhaLatitude(amigo), minhaLongitude(amigo));
+        int latAmigo = 0, longAmigo = 0;
+        posicaoIdoso(amigo, idoso->leituraAtual, &latAmigo, &longAmigo);
+        distancia = calcularDistancia(latitude, longitude, latAmigo, longAmigo);
 
         // Se um indiceMenor ainda não foi encontrado, ou a distancia atual for menor
         if (indiceMenor == -1 || distancia < menorDistancia) {
@@ -120,28 +122,43 @@ void incrementarCuidadores(Idoso *idoso) {
     idoso->quantidadeCuidadores++;
 }
 
-Leitura *leituraIdoso(Idoso *idoso) {
-    char linha[100];
-    int falecimento = 0, queda, latitude, longitude;
-    float temperatura;
+Leitura *leituraIdoso(Idoso *idoso, int indice) {
+    // Se a leitura atual estiver desatualizada
+    if (idoso->leituraAtual < indice) {
+        idoso->leituraAtual++;
 
-    // Lê a próxima linha da leitura do idoso
-    fgets(linha, 100, idoso->leituras);
-    // Se não for possível ler os 4 dados, houve falecimento
-    if (sscanf(linha, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda) != 4) {
-        falecimento = 1;
-        idoso->faleceu = 1;
+        char linha[100];
+        int falecimento = 0, queda, latitude, longitude;
+        float temperatura;
+
+        // Lê a próxima linha da leitura do idoso
+        fgets(linha, 100, idoso->leituras);
+        // Se não for possível ler os 4 dados, houve falecimento
+        if (sscanf(linha, "%f;%d;%d;%d", &temperatura, &latitude, &longitude, &queda) != 4) {
+            falecimento = 1;
+            idoso->faleceu = 1;
+        }
+
+        // salva a nova posição para uso dos amigos e incrementa o índice da leitura
+        idoso->latitude = latitude;
+        idoso->longitude = longitude;
+
+        // Cria o objeto Leitura com os dados obtidos, insere no início histórico e o retorna
+        Leitura *leitura = inicializarLeitura(falecimento, queda, latitude, longitude, temperatura);
+        inserirInicio(idoso->historico, leitura);
     }
 
-    // salva a nova posição para uso dos amigos e incrementa o índice da leitura
-    idoso->latitude = latitude;
-    idoso->longitude = longitude;
-    idoso->leituraAtual++;
+    // Retorna a leitura mais recente
+    return listaN(idoso->historico, 0);
+}
 
-    // Cria o objeto Leitura com os dados obtidos, insere no histórico e o retorna
-    Leitura *leitura = inicializarLeitura(falecimento, queda, latitude, longitude, temperatura);
-    inserirFim(idoso->historico, leitura);
-    return leitura;
+void posicaoIdoso(Idoso *idoso, int indice, int *latitude, int *longitude) {
+    // Se a posição estiver desatualizada, força uma nova leitura
+    if (idoso->leituraAtual < indice) {
+        leituraIdoso(idoso, indice);
+    }
+    *latitude = idoso->latitude;
+    *longitude = idoso->longitude;
 }
 
 int minhaLatitude(Idoso *idoso) {

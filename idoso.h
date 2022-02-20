@@ -38,8 +38,11 @@ Cuidador* cuidadorMaisProximo(Idoso* idoso, int latitude, int longitude);
 // Incrementa a quantidade de cuidadores do idoso
 void incrementarCuidadores(Idoso* idoso);
 
-// Realiza a próxima leitura do idoso e armazena os dados nos ponteiros fornecidos
-Leitura* leituraIdoso(Idoso* idoso);
+// Retorna a leitura mais recente do idoso
+Leitura* leituraIdoso(Idoso* idoso, int indice);
+
+// Determina a posição atual do idoso e armazena nos ponteiros fornecidos
+void posicaoIdoso(Idoso* idoso, int indice, int* latitude, int* longitude);
 
 // Retorna a latitude do idoso
 int minhaLatitude(Idoso* idoso);

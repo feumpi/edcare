@@ -38,7 +38,7 @@ void posicaoCuidador(Cuidador *cuidador, int indice, int *latitude, int *longitu
     char linha[100];
 
     // Se a posição atual estiver desatualizada
-    if (cuidador->leituraAtual <= indice) {
+    if (cuidador->leituraAtual < indice) {
         // Como nem todo cuidador é lido em toda "rodada", é preciso descartar as leituras de índices anteriores
         while (cuidador->leituraAtual < indice) {
             // Se o fgets retorna um ponteiro != NULL e o indice desejado foi atingido, sinaliza que os valores podem ser lidos

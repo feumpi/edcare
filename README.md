@@ -38,7 +38,7 @@ dificuldades encontradas:
 
 - de forma parecida, a posição de um cuidador pode ser requisitada por mais de um idoso a cada leitura, e nesse caso não é desejável ler a próxima linha, e sim obter a posição atual. pra isso, a posição, uma vez lida, é guardada em `Cuidador::longitude` e `Cuidador::latitude`, e `Cuidador::leituraAtual` identifica se ela está atualizada.
 
-- foi preciso tratar o caso de, na leitura de um idoso A, que precisa acionar um amigo B, ainda não ter disponivel a posição atualizada de B, por não ter sido lido ainda. pra determinar se a posição está atualizada, usa-se `Idoso::leituraAtual`
+- foi preciso tratar o caso de, na leitura de um idoso A, que precisa acionar um amigo B, ainda não ter disponivel a posição atualizada de B, por não ter sido lido ainda. para corrigir isso, é mantida uma lista de leituras em `Idoso::historico`. Ao solicitar a posição por `Idoso::posicaoIdoso`, é verificado se `Idoso::leituraAtual` está desatualizada, forçando uma nova leitura para atualizar a posição. Na hora de ler o próprio idoso, é verificado se a leitura ainda precisa ser feita, e adicionada ao início do histórico. A leitura 0 do histórico é então retornada.
 
 ### diferenças nos casos de teste documentadas
 

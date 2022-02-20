@@ -187,7 +187,7 @@ void realizarLeituras(EDCare *edcare) {
             }
 
             // Obtém a próxima leitura do idoso atual
-            Leitura *leitura = leituraIdoso(idoso);
+            Leitura *leitura = leituraIdoso(idoso, edcare->leituraAtual);
 
             // Se houver falecimento, interromper tratamento do idoso
             if (leituraFalecimento(leitura)) {
